@@ -12,7 +12,7 @@
 ## 1. Installation
 
 ```bash
-pip install open-dqi
+pip install open-dqi-core
 ```
 
 ---

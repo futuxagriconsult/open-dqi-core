@@ -3,7 +3,7 @@ requires = ["hatchling"]
 build-backend = "hatchling.build"
 
 [project]
-name = "open-dqi"
+name = "open-dqi-core"
 version = "0.1.0"
 description = "Schema-agnostic Data Quality Index middleware for any tabular dataset"
 readme = "README.md"

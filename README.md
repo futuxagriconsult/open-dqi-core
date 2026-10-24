@@ -7,7 +7,7 @@ A schema-agnostic Data Quality Index (DQI) library that scores any CSV or pandas
 ## Quick Install and First Result
 
 ```bash
-pip install open-dqi
+pip install open-dqi-core
 ```
 
 **Python (2-minute example):**
