@@ -3,6 +3,7 @@
 [![PyPI version](https://img.shields.io/pypi/v/open-dqi-core.svg?color=0FBFF1&logo=pypi&logoColor=white)](https://pypi.org/project/open-dqi-core/)
 [![npm version](https://img.shields.io/npm/v/@futux/dqi.svg?color=0B3541&logo=npm&logoColor=white)](https://www.npmjs.com/package/@futux/dqi)
 [![Python Versions](https://img.shields.io/pypi/pyversions/open-dqi-core.svg)](https://pypi.org/project/open-dqi-core/)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.23612965.svg)](https://doi.org/10.5281/zenodo.23612965)
 [![License: Apache 2.0](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 [![Live Web Demo](https://img.shields.io/badge/Interactive_Playground-Live_Online-0FBFF1?style=flat&logo=google-chrome&logoColor=white)](https://futuxagriconsult.github.io/open-dqi-core/)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](https://github.com/futuxagriconsult/open-dqi-core/blob/main/CONTRIBUTING.md)
@@ -164,8 +165,9 @@ If you use Open-DQI in academic research, government benchmarking, or DPI public
   author = {FutuX Agri-consult Limited},
   title = {Open-DQI: Schema-Agnostic Data Quality Index Middleware for Digital Public Infrastructure},
   year = {2026},
-  publisher = {GitHub},
-  journal = {GitHub repository},
+  publisher = {Zenodo},
+  doi = {10.5281/zenodo.23612965},
+  url = {https://doi.org/10.5281/zenodo.23612965},
   howpublished = {\url{https://github.com/futuxagriconsult/open-dqi-core}}
 }
 ```

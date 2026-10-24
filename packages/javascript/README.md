@@ -2,6 +2,7 @@
 
 [![npm version](https://img.shields.io/npm/v/@futux/dqi.svg?color=0B3541&logo=npm&logoColor=white)](https://www.npmjs.com/package/@futux/dqi)
 [![npm downloads](https://img.shields.io/npm/dm/@futux/dqi.svg)](https://www.npmjs.com/package/@futux/dqi)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.23612965.svg)](https://doi.org/10.5281/zenodo.23612965)
 [![License: Apache 2.0](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 [![Live Web Demo](https://img.shields.io/badge/Interactive_Playground-Live_Online-0FBFF1?style=flat&logo=google-chrome&logoColor=white)](https://futuxagriconsult.github.io/open-dqi-core/)
 
