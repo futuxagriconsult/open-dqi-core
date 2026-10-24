@@ -1,5 +1,10 @@
 # open-dqi
 
+[![PyPI version](https://img.shields.io/pypi/v/open-dqi-core.svg?color=0FBFF1)](https://pypi.org/project/open-dqi-core/)
+[![npm version](https://img.shields.io/npm/v/@futux/dqi.svg?color=0B3541)](https://www.npmjs.com/package/@futux/dqi)
+[![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
+[![Playground](https://img.shields.io/badge/Live_Playground-GitHub_Pages-brightgreen.svg)](https://futuxagriconsult.github.io/open-dqi-core/)
+
 A schema-agnostic Data Quality Index (DQI) library that scores any CSV or pandas DataFrame across four weighted dimensions: Completeness, Validity, Uniqueness, and Outlier Detection.
 
 ---
