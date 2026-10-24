@@ -1,0 +1,201 @@
+farmer_id,full_name,phone_number,state,lga,latitude,longitude,farm_area_ha,age,gender,crop_type
+FMR-000001,Rotimi Dauda,+2348373158606,Borno,North Judithbury,3.370116,6.345346,2.62,65,Male,Pepper
+FMR-000002,Salisu Sanusi,+2348590571865,Yobe,East Jill,4.038939,8.078677,0.78,31,Male,Soybean
+FMR-000003,Adamu Afolabi,+2348292825378,Adamawa,New Roberttown,9.161447,11.549031,7.16,44,Male,Cowpea
+FMR-000004,Taiwo Adeyemi,+2348265438422,Kaduna,East Jessetown,11.841849,3.176685,8.16,62,Female,Millet
+FMR-000005,Musa Shekarau,+2347596724164,Delta,Lake Debra,5.425389,12.109231,1.47,42,Male,Millet
+FMR-000006,Aaron Katsina,+2348819980297,Kwara,Robinsonshire,9.620241,12.624114,7.43,52,Male,Groundnut
+FMR-000007,Garba Otedola,+2347169222132,Zamfara,Lisatown,6.266325,10.51795,8.91,41,Male,Other
+FMR-000008,Samuel Chukwu,+2347149368553,Akwa Ibom,Lake Roberto,10.241644,12.222206,9.86,32,Male,Groundnut
+FMR-000009,Ngozi Chukwu,+2347596943772,Oyo,Ericmouth,9.965392,7.40502,4.02,31,Female,Other
+FMR-000010,Adamu Oloyede,+2349011450404,Bauchi,North Noahstad,9.678615,5.119436,7.43,28,Female,Groundnut
+FMR-000011,David Gbadamosi,+2347579708537,Zamfara,Cassandraton,5.471844,6.926536,7.8,21,Male,Maize
+FMR-000012,Ramatu Waziri,+2348728822695,Kebbi,Herrerafurt,7.43258,3.881026,9.17,54,Female,Yam
+FMR-000013,Maryam Bankole,+2348407543818,Rivers,New Kellystad,7.372825,13.891662,4.86,34,Male,Yam
+FMR-000014,Emmanuel Kano,+2348599851660,Zamfara,Lake Chad,8.920955,11.914763,4.57,55,Female,Millet
+FMR-000015,Patience Kalu,+2347470987740,Cross River,Port Keith,8.602884,4.172731,0.95,25,Male,Pepper
+FMR-000016,Ada Katsina,+2347343558720,Ondo,Port Jesseville,9.541218,7.640254,6.16,47,Female,Soybean
+FMR-000017,Maimuna Igwe,+2348848510326,Abia,Ramirezstad,10.447061,4.451711,8.91,66,Female,Pepper
+FMR-000018,Bilkisu Alabi,+2347730521271,Borno,West Michael,6.269801,4.966262,0.53,64,Female,Soybean
+FMR-000019,Isah Waziri,+2348636301367,Edo,Jacquelineland,8.582962,4.355648,6.44,58,Male,Cassava
+FMR-000020,Mustapha Olawale,+2347802973878,Ebonyi,New Jessica,8.925294,12.287792,5.54,18,Female,Cowpea
+FMR-000021,Olumide Oni,+2347041825985,Borno,South Noah,13.134265,13.468918,8.4,37,Male,Maize
+FMR-000022,Grace Salami,+2347517267796,FCT,Lake Mark,13.327054,4.110711,5.12,22,Male,Cassava
+FMR-000023,Joseph Kano,+2348416804102,Plateau,East Lydiamouth,13.325966,5.048498,5.51,56,Female,Yam
+FMR-000024,Hadiza Shekarau,+2348994826543,Yobe,Adamsborough,11.256864,11.240438,7.27,43,Female,Cowpea
+FMR-000025,Babatunde Ebuka,+2348931906533,Taraba,Jasonfort,7.97605,6.025286,1.11,19,Male,Tomato
+FMR-000026,Maimuna Abdullahi,+2347472913243,Abia,Wilkersonmouth,3.866725,10.547015,2.67,20,Female,Rice
+FMR-000027,Ogechi Ajayi,+2348104141864,Imo,West Donald,6.107554,8.827891,5.62,64,Female,Yam
+FMR-000028,Rakiya Balogun,+2348684957391,Plateau,Juliechester,11.820968,5.346837,1.42,45,Female,Groundnut
+FMR-000029,Garba Makama,+2347882835422,Oyo,Coxberg,12.429437,3.73922,6.71,59,Male,Maize
+FMR-000030,Kabir Oloyede,+2347864622621,Kogi,Daviston,11.746399,4.389375,2.32,52,Female,Cassava
+FMR-000031,Chinedu Eze,+2347905983920,Edo,East Courtneychester,6.108288,6.047716,9.27,46,Male,Maize
+FMR-000032,Kelechi Kano,+2348400470492,Yobe,South Patrickmouth,12.129098,14.534156,9.3,33,Male,Groundnut
+FMR-000033,Mohammed Momoh,+2348042906379,Plateau,Tashatown,5.408471,7.832275,1.06,42,Male,Groundnut
+FMR-000034,Umar Ajayi,+2347569519230,Oyo,Lake Nicoleview,6.180692,11.31978,7.44,68,Female,Cassava
+FMR-000035,Isaac Oloyede,+2347407802566,Kano,Danielchester,5.45117,3.790103,7.49,21,Female,Maize
+FMR-000036,Bukola Kano,+2347107679841,Plateau,South Aaron,8.530784,13.162095,2.0,50,Male,Cassava
+FMR-000037,Ngozi Adeyemi,+2347147148436,Bauchi,Teresaburgh,10.392296,5.875406,1.64,54,Male,Tomato
+FMR-000038,Eniola Akintola,+2348276720171,Akwa Ibom,Port Colleenhaven,9.78932,8.046854,6.04,51,Female,Sorghum
+FMR-000039,Hauwa Gwarzo,+2347438643292,Kebbi,East Nathaniel,5.677808,7.770273,6.88,37,Female,Millet
+FMR-000040,Musa Igwe,+2348995051677,Bauchi,New Stephanie,3.200607,10.429679,5.85,24,Male,Soybean
+FMR-000041,Emeka Gbadamosi,+2347457745397,Sokoto,New Mariotown,5.964164,14.112461,8.87,33,Female,Sorghum
+FMR-000042,Umar Ribadu,+2347338758748,Osun,West Natashaport,12.104446,11.401771,6.31,69,Male,Pepper
+FMR-000043,Idris Akintola,+2348754717773,Zamfara,North John,6.333291,10.927987,9.42,26,Female,Rice
+FMR-000044,Kabir Katsina,+2348910643499,Benue,North Jessicaland,11.1181,4.934285,3.18,31,Female,Yam
+FMR-000045,Ibrahim Zubairu,+2348476388841,Jigawa,East Donna,8.558418,6.063231,9.13,21,Male,Pepper
+FMR-000046,Haruna Afolabi,+2347909622041,Kaduna,West Allison,3.576137,7.035967,1.74,34,Male,Other
+FMR-000047,Ade Dikko,+2347948834532,Zamfara,Brandtside,10.721208,9.718701,1.56,62,Male,Soybean
+FMR-000048,Yusuf Salami,+2347077369839,Lagos,Lake Larry,9.391103,4.847507,1.71,37,Female,Maize
+FMR-000049,Bello Hassan,+2348930425952,Kwara,Samuelhaven,5.368827,6.044451,1.48,67,Female,Tomato
+FMR-000050,Ade Gowon,+2348609490924,Delta,Martinezbury,13.098249,5.893501,2.04,69,Male,Groundnut
+FMR-000051,Usman Afolabi,+2347053228317,Edo,West Andrewside,11.054896,7.019789,9.34,69,Male,Sorghum
+FMR-000052,Halima Abdullahi,+2347341874760,Benue,New Jeffrey,7.231451,3.55695,4.97,30,Female,Millet
+FMR-000053,Zainab Okonkwo,+2347655392397,Gombe,Lake Crystalbury,5.507574,10.888392,4.29,35,Male,Sorghum
+FMR-000054,Shehu Danjuma,+2347754080568,Sokoto,North Micheleland,7.416527,14.677566,5.59,19,Male,Sorghum
+FMR-000055,Garba Chukwu,+2347383471469,Jigawa,West Elizabeth,3.513178,10.139541,3.78,68,Female,Groundnut
+FMR-000056,Faith Momoh,+2348301823594,Sokoto,New David,4.348974,13.714156,2.31,20,Female,Maize
+FMR-000057,Ngozi Babangida,+2348116520442,Yobe,Sanchezfort,10.518057,14.195105,7.5,30,Female,Groundnut
+FMR-000058,Segun Kano,+2347150267605,Kogi,Leeville,9.830078,10.927972,1.68,37,Female,Pepper
+FMR-000059,Dike YarAdua,+2347877017098,Kebbi,Gomezchester,7.445924,6.588731,1.71,44,Female,Pepper
+FMR-000060,Akin Bakare,+2348606606727,Edo,Shieldston,9.747561,6.651209,5.71,18,Female,Sorghum
+FMR-000061,Aminu Abiola,+2347451363872,Ondo,North Richardmouth,11.586195,10.258607,3.56,46,Female,Pepper
+FMR-000062,Ada Gbadamosi,+2347458920269,Sokoto,East Jamesside,8.210411,13.733934,8.06,28,Male,Sorghum
+FMR-000063,Abubakar Bankole,+2348106924756,Kogi,Taylorburgh,4.108582,14.333596,2.73,37,Male,Yam
+FMR-000064,Kehinde Abdullahi,+2347316440229,Adamawa,Stevenland,3.599108,14.710445,6.31,67,Male,Cowpea
+FMR-000065,Hassan Ibe,+2347890005286,FCT,Mortonside,5.199901,11.31698,5.2,33,Male,Pepper
+FMR-000066,Aisha Dosunmu,+2348476657894,Abia,North Deniseside,12.740726,13.253199,8.91,67,Female,Yam
+FMR-000067,Danladi Nnamani,+2347377713767,Taraba,North Sarabury,8.117139,9.677388,9.22,25,Female,Cassava
+FMR-000068,Uche Uba,+2348721029047,Oyo,South Todd,10.30984,14.757131,6.16,66,Female,Tomato
+FMR-000069,Comfort Otedola,+2348750213145,Sokoto,Port Richard,7.7088,13.800886,4.74,28,Female,Cowpea
+FMR-000070,Isah Ahmed,+2347556609615,Imo,East Nicholasfurt,12.170519,6.372274,7.89,49,Male,Sorghum
+FMR-000071,Bello Okafor,+2347944619211,Bauchi,Saramouth,10.806285,5.867024,3.69,52,Male,Cassava
+FMR-000072,Zainab Ogundipe,+2347323906379,Gombe,Rodneyside,7.236781,4.903102,2.53,44,Female,Millet
+FMR-000073,Efe Nwosu,+2348165248557,Oyo,Mooreport,7.590362,5.540646,4.49,67,Male,Tomato
+FMR-000074,Hauwa Soyinka,+2347816862042,Plateau,North Beth,3.163678,7.250754,7.66,44,Male,Cowpea
+FMR-000075,Fatima Eze,+2347471204383,Kaduna,Lake Leeton,7.807029,3.442493,3.69,61,Female,Other
+FMR-000076,Olamide Shekarau,+2347354430857,Oyo,Shawhaven,13.03105,14.672519,5.57,43,Male,Rice
+FMR-000077,Chisom Balogun,+2348380294367,Ondo,North Susan,4.565554,8.548042,0.98,42,Female,Yam
+FMR-000078,David Olawale,+2347976459372,Kebbi,Port Jacobland,6.745006,13.479752,3.14,44,Female,Rice
+FMR-000079,Rabi Shonekan,+2348009976242,Adamawa,South David,11.189462,3.71461,9.54,32,Male,Pepper
+FMR-000080,Sadiq Nnamani,+2347086453688,Adamawa,New Brooke,13.355807,5.452456,0.69,27,Male,Cassava
+FMR-000081,Oluwaseun Ajayi,+2348016964633,Borno,South Dianeshire,9.190871,5.671982,7.14,67,Female,Cassava
+FMR-000082,Femi Shonekan,+2348301144650,Borno,Sarahborough,11.500152,5.032437,3.45,55,Male,Sorghum
+FMR-000083,Efe Igwe,+2348236514049,Nasarawa,Johnfurt,7.383868,11.537174,1.22,62,Male,Rice
+FMR-000084,Blessing YarAdua,+2348497210568,Katsina,Lake Debbie,12.283167,10.184857,1.65,54,Male,Millet
+FMR-000085,Chidi Gwarzo,+2348144061708,Ondo,Stewartland,10.24443,3.913689,6.65,18,Female,Cowpea
+FMR-000086,Halima Soyinka,+2347226642993,Ondo,South Christineshire,13.476506,10.599904,8.37,63,Male,Groundnut
+FMR-000087,Usman YarAdua,+2347378251236,Taraba,North Amandahaven,13.527116,6.286972,8.18,52,Female,Cowpea
+FMR-000088,Bolaji Okonkwo,+2347935389095,Kaduna,Davidstad,6.580889,5.996843,9.38,35,Female,Yam
+FMR-000089,Daniel Gowon,+2348611635551,Oyo,East Mikeburgh,9.254376,10.984624,3.7,49,Female,Cassava
+FMR-000090,Dayo Akintola,+2348047005518,Enugu,Bassport,6.93211,6.148558,3.16,56,Female,Soybean
+FMR-000091,Aliyu Babangida,+2347021799349,Taraba,Lake Lisaport,13.339076,4.110233,7.34,49,Male,Other
+FMR-000092,Uche Shonekan,+2348022402165,Rivers,East Josephville,7.940285,3.30347,3.3,43,Male,Sorghum
+FMR-000093,Isaac Okonkwo,+2348425843289,Lagos,West Juan,8.211213,9.364879,4.54,65,Female,Millet
+FMR-000094,Suleiman Dosunmu,+2348509369501,Oyo,Lake Matthew,6.025897,6.066563,1.65,30,Female,Rice
+FMR-000095,Rabi Uba,+2348595324933,Yobe,Williamview,13.369478,11.24393,2.32,65,Female,Sorghum
+FMR-000096,Uche Gowon,+2348556034433,Taraba,North Cynthiaview,9.54534,14.670025,8.41,36,Male,Millet
+FMR-000097,Yakubu Waziri,+2347385347785,Katsina,North Matthewberg,3.252802,9.402794,3.11,21,Female,Other
+FMR-000098,Sanusi Gwarzo,+2349027417010,Cross River,Evanmouth,9.988992,11.982948,1.47,18,Female,Cowpea
+FMR-000099,Peter Abdullahi,+2348028030933,Osun,Hoffmanville,6.779624,14.492872,2.9,48,Male,Rice
+FMR-000100,Idris Agbaje,+2347860512673,Rivers,Lake Rebeccaside,3.900087,10.527459,1.01,27,Female,Rice
+FMR-000101,Isah Ogundipe,+2347532986017,Borno,Port Mikeside,9.127189,8.010853,6.16,57,Male,Soybean
+FMR-000102,Femi Danjuma,+2347816855596,Osun,South David,12.911847,6.608767,6.09,45,Female,Tomato
+FMR-000103,Ramatu Hassan,+2348333646021,Anambra,Michaelton,9.684014,11.833054,9.5,31,Male,Sorghum
+FMR-000104,Akin Fashola,+2348418258633,Bayelsa,Jasonbury,4.796217,5.151,1.21,18,Female,Cowpea
+FMR-000105,Grace Tukur,+2348480413235,Plateau,West Kimberlychester,6.2456,5.83142,7.22,62,Female,Rice
+FMR-000106,Umar Shonekan,+2348476147878,Gombe,East Michelle,13.078239,12.396371,6.44,60,Male,Groundnut
+FMR-000107,Adamu Shekarau,+2347246480225,Yobe,South Angel,5.527942,4.858075,3.02,27,Male,Maize
+FMR-000108,Daniel Makama,+2347356316468,Katsina,Kimberlychester,9.526476,12.826036,9.25,46,Male,Cowpea
+FMR-000109,Maryam Tukur,+2348478924731,Katsina,West Erik,10.657124,14.22358,5.25,49,Female,Rice
+FMR-000110,Ada Chukwu,+2348284273955,Akwa Ibom,South Monicafort,12.705767,11.7675,6.24,19,Male,Yam
+FMR-000111,Efe Ribadu,+2349065688352,FCT,East Lisa,9.440928,3.344796,7.77,70,Female,Tomato
+FMR-000112,Sadiq Momoh,+2347086396863,Edo,Baileybury,8.181409,10.787812,9.2,29,Female,Pepper
+FMR-000113,Efe Salami,+2348748577710,Rivers,North Donna,13.565797,8.646123,4.38,38,Male,Cassava
+FMR-000114,Eniola Oloyede,+2347708247981,Ogun,Murphyland,10.591676,6.50097,9.48,70,Male,Cowpea
+FMR-000115,John Oladipo,+2347189106962,Kebbi,Michaelhaven,5.825908,4.467875,7.84,50,Male,Pepper
+FMR-000116,Musa Adeyemi,+2348866952453,Yobe,Frazierside,8.089345,3.739608,5.43,57,Female,Pepper
+FMR-000117,Usman Chukwu,+2347949275716,Anambra,Sheilaville,5.298429,9.580792,9.31,46,Female,Rice
+FMR-000118,Gbenga Kano,+2347061996648,Imo,Gregoryview,10.765655,6.766852,0.63,44,Male,Yam
+FMR-000119,Aliyu Dikko,+2348806904941,Borno,North Candacestad,8.083637,4.486101,8.41,49,Female,Soybean
+FMR-000120,Ade Otedola,+2348514859943,Kaduna,Samuelhaven,7.587296,8.793495,4.99,47,Male,Groundnut
+FMR-000121,Temitope Gbadamosi,+2347409332650,Sokoto,South Rachelborough,11.159959,4.710798,1.16,67,Female,Millet
+FMR-000122,Victoria Oloyede,+2349006283145,Sokoto,Bradleychester,5.985465,3.13027,7.4,55,Female,Cassava
+FMR-000123,Isaac Fashola,+2347958953228,Yobe,New Saraside,8.330887,7.022791,7.75,42,Female,Millet
+FMR-000124,Janet Sanusi,+2348867455403,Ekiti,West Ryan,13.692366,5.917905,4.14,67,Female,Maize
+FMR-000125,Uche Dikko,+2347683278460,Plateau,Cindyville,10.716461,12.674625,4.17,60,Male,Cowpea
+FMR-000126,Chidi Makama,+2349071944711,Akwa Ibom,Williamchester,4.46346,14.491172,3.65,24,Female,Rice
+FMR-000127,Aaron Zubairu,+2348129471346,Oyo,Richardport,3.265754,4.801034,8.77,27,Male,Cowpea
+FMR-000128,Kehinde Okeke,+2348678312775,Jigawa,East Robert,6.756461,11.273914,6.67,39,Female,Millet
+FMR-000129,Aisha Alabi,+2348346040979,Rivers,Byrdburgh,12.521737,3.523609,1.15,58,Female,Yam
+FMR-000130,Gabriel Jalingo,+2348603668560,Bayelsa,Richardtown,7.786892,4.261629,6.52,24,Female,Cassava
+FMR-000131,John Okeke,+2348490356149,Katsina,Justinchester,12.85698,3.642693,8.06,36,Female,Millet
+FMR-000132,Emeka Okonkwo,+2347924892835,Delta,Stevenmouth,5.737332,7.962211,6.98,29,Male,Cassava
+FMR-000133,Victoria Abdullahi,+2347169583236,Nasarawa,New Thomas,9.792872,5.941792,9.17,27,Male,Cowpea
+FMR-000134,Kabir Dosunmu,+2348369889762,Jigawa,Lake Christopher,8.063361,10.96872,9.04,47,Female,Pepper
+FMR-000135,Adewale Shonekan,+2348173810569,Ebonyi,Clarencebury,3.897709,14.25378,9.88,37,Female,Other
+FMR-000136,Shehu Okafor,+2347537081849,Oyo,Jeffreyborough,12.229282,5.450761,4.15,48,Male,Yam
+FMR-000137,Wale Waziri,+2347818973588,FCT,North Brandon,6.976759,6.591294,7.14,19,Female,Sorghum
+FMR-000138,John Zubairu,+2347017390250,FCT,Carrland,12.442728,12.284077,9.75,56,Female,Sorghum
+FMR-000139,Samuel Fashola,+2348665891059,Gombe,Perryshire,9.656302,7.257387,6.55,57,Female,Pepper
+FMR-000140,Aisha Gwarzo,+2348622589942,Cross River,Lake Heather,9.88508,13.760164,6.64,37,Female,Maize
+FMR-000141,Ada Nnamani,+2348244625266,Lagos,Rossberg,11.009485,4.163574,3.3,65,Female,Cassava
+FMR-000142,Saratu Abdullahi,+2347431203546,Cross River,Port Michelleville,11.594338,13.442235,3.98,50,Female,Cassava
+FMR-000143,Dayo Ogundipe,+2347551839046,Plateau,Robinsonhaven,13.547748,6.582669,8.77,69,Male,Cowpea
+FMR-000144,Habib Kano,+2349067797613,Bauchi,Williamsbury,4.620176,14.504702,8.67,64,Female,Soybean
+FMR-000145,Salisu Olawale,+2347785495949,Bayelsa,South Dennismouth,11.639365,3.26424,5.6,47,Female,Pepper
+FMR-000146,Janet Olawale,+2348608490173,Jigawa,Stephaniemouth,9.413249,12.804524,9.43,24,Male,Cowpea
+FMR-000147,Efe Otedola,+2347053740023,Zamfara,Rivasside,6.642468,10.29897,6.65,58,Female,Other
+FMR-000148,Faith Salami,+2347648948451,Ogun,Merrittfort,4.3601,3.635092,0.85,49,Male,Rice
+FMR-000149,Lawal Ribadu,+2347504229222,Yobe,Greenbury,4.565172,8.452996,6.87,65,Female,Tomato
+FMR-000150,Dike Momoh,+2348594010563,Delta,Katiehaven,12.662469,10.828078,8.42,57,Female,Sorghum
+FMR-000151,Bello Ogundipe,+2347070257689,Lagos,Simsview,5.446513,8.347411,2.74,41,Male,Pepper
+FMR-000152,Adamu Danjuma,+2347788845815,Yobe,Jonesport,12.838319,10.708956,1.08,35,Male,Rice
+FMR-000153,Adewale Abiola,+2349037985143,Oyo,West Matthew,4.090073,5.602849,6.58,19,Male,Millet
+FMR-000154,Comfort YarAdua,+2347523060209,Cross River,East Edwardfurt,11.599363,5.521426,8.38,53,Male,Tomato
+FMR-000155,Isah Soyinka,+2347463751999,Gombe,Lake Jason,6.648443,4.841139,9.06,18,Female,Cassava
+FMR-000156,Yusuf Chukwu,+2347279155978,Yobe,Russellside,5.807065,5.159066,6.78,19,Male,Maize
+FMR-000157,Saratu Bankole,+2347769319430,Imo,Perryborough,9.459612,3.286217,3.02,26,Female,Soybean
+FMR-000158,John Maikudi,+2347244060020,Bauchi,Priceshire,8.243456,12.280601,5.38,24,Female,Soybean
+FMR-000159,Zainab Afolabi,+2347475774467,Akwa Ibom,Port Nicoleshire,10.954224,13.82327,6.76,37,Female,Pepper
+FMR-000160,Bolaji Abdullahi,+2349070230469,Adamawa,Woodsstad,3.756914,8.751987,4.32,61,Male,Cowpea
+FMR-000161,Halima Tukur,+2348529870164,Osun,Karenchester,3.8937,4.053328,6.28,22,Male,Sorghum
+FMR-000162,Shehu Ibe,+2348340711612,Zamfara,South Jeffrey,10.79125,7.594672,6.18,36,Female,Soybean
+FMR-000163,Musa Bankole,+2348300144138,Ondo,Tuckerfurt,4.171127,11.380997,8.6,59,Male,Groundnut
+FMR-000164,Dayo Nnamani,+2347969706787,Gombe,Elizabethfurt,7.569187,12.863547,4.29,64,Male,Millet
+FMR-000165,Aaron Okeke,+2347916468730,Kebbi,Port Tanner,10.283165,7.516752,1.95,48,Male,Rice
+FMR-000166,Akin Nnamani,+2348786216533,Bayelsa,New Amanda,4.106885,4.23946,7.52,69,Male,Soybean
+FMR-000167,Ade Danjuma,+2347128808169,Zamfara,Vargastown,9.166181,11.006157,4.4,60,Female,Other
+FMR-000168,Dayo Eze,+2347110479607,Kano,Lake Roymouth,9.584429,7.249425,5.99,31,Male,Pepper
+FMR-000169,Idris Waziri,+2348035493852,Gombe,North Jorge,12.250568,7.231345,5.78,25,Female,Tomato
+FMR-000170,Wale Momoh,+2347485672952,Ondo,Jasonmouth,12.227676,14.59965,8.28,57,Male,Tomato
+FMR-000171,Lawal Okeke,+2348995193316,Kaduna,Kathleenfurt,3.412694,6.324591,7.74,39,Female,Maize
+FMR-000172,Fatima Babangida,+2347389565468,Delta,Karenchester,9.216268,7.829255,1.85,58,Male,Rice
+FMR-000173,Hauwa Ahmed,+2348602262809,Taraba,Maryfort,5.423435,8.054023,3.74,41,Female,Other
+FMR-000174,Umar Okonkwo,+2347696606947,FCT,Lake Amberstad,9.539217,13.523438,1.98,66,Male,Pepper
+FMR-000175,Aminu Nwosu,+2347175194994,Kaduna,Lake Casey,7.88562,8.103374,6.27,44,Female,Yam
+FMR-000176,Wale Adeyemi,+2348621228051,Sokoto,Port Anthonybury,4.329229,8.172981,3.19,61,Female,Soybean
+FMR-000177,Ifeanyi Afolabi,+2348432656267,Katsina,Port Andrew,3.590508,7.764108,6.19,18,Male,Sorghum
+FMR-000178,Femi Waziri,+2349030068016,Enugu,East David,11.387375,12.117099,3.25,25,Male,Cowpea
+FMR-000179,Ade Nwosu,+2348604200608,Ondo,New Staciemouth,4.997504,7.586448,7.18,50,Female,Rice
+FMR-000180,Taiwo Nwosu,+2347852703841,Akwa Ibom,Katieburgh,7.811172,8.5251,1.24,38,Female,Tomato
+FMR-000181,Wale Ebuka,+2347868491524,Ogun,Port Loriport,6.226764,7.879381,9.68,28,Female,Other
+FMR-000182,Dike Salami,+2348975190500,Lagos,New Anthonyport,4.051803,13.064915,2.81,55,Female,Soybean
+FMR-000183,Blessing Shonekan,+2347168893343,Niger,Sandersborough,12.501664,11.900497,2.6,67,Male,Rice
+FMR-000184,Chinedu Akintola,+2348096254510,Borno,New Hannahbury,8.830532,5.388064,7.87,40,Male,Yam
+FMR-000185,Chisom Ahmed,+2347220771045,Delta,Lake Kendraville,5.864457,5.147288,1.95,66,Male,Cassava
+FMR-000186,Isah Afolabi,+2349042884318,Rivers,West Amandastad,8.110693,9.752079,6.0,61,Female,Pepper
+FMR-000187,Suleiman Waziri,+2347678903113,Delta,New Deborahtown,7.849438,8.633269,6.5,68,Female,Tomato
+FMR-000188,Ada Balogun,+2347120628710,Kwara,Shortville,8.579238,6.762813,4.79,21,Female,Sorghum
+FMR-000189,Garba Ribadu,+2347164778569,Bayelsa,Yumouth,9.742091,9.0834,4.9,53,Male,Cowpea
+FMR-000190,Temitope Oloyede,+2348952169917,FCT,South Gregory,10.139845,6.894016,5.02,27,Male,Cowpea
+FMR-000191,John Babangida,+2347222268589,Kogi,Christinaside,13.709764,4.095084,6.64,20,Male,Other
+FMR-000192,Yakubu Momoh,+2347940078729,Osun,Marshallshire,8.75994,10.295704,3.96,36,Female,Groundnut
+FMR-000193,Femi Oladipo,+2348663150464,Kogi,Marcusbury,10.432095,3.717913,6.49,39,Male,Millet
+FMR-000194,Sanusi Okonkwo,+2347202949969,Zamfara,West Nicolebury,10.426497,6.452934,7.38,60,Male,Millet
+FMR-000195,Chidi Tukur,+2347175024176,Delta,Hudsonfurt,13.000862,6.760735,6.73,60,Female,Cassava
+FMR-000196,Wale Akintola,+2348277841297,Bayelsa,Anthonymouth,6.443484,7.544816,8.02,70,Male,Pepper
+FMR-000197,Femi Babangida,+2348509317800,Taraba,South Jason,4.109292,11.011381,5.33,19,Female,Sorghum
+FMR-000198,Chidi Ibe,+2347387111671,Enugu,Matthewview,6.790709,12.140643,2.32,26,Male,Rice
+FMR-000199,Emeka Oloyede,+2347635208694,Benue,New Stacyland,8.583049,9.469295,7.52,51,Male,Pepper
+FMR-000200,Samuel Eze,+2347723195978,Cross River,Lake Richard,9.550262,4.920183,2.22,62,Male,Other

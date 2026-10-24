@@ -1,0 +1,46 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "open-dqi"
+version = "0.1.0"
+description = "Schema-agnostic Data Quality Index middleware for any tabular dataset"
+readme = "README.md"
+license = { text = "Apache-2.0" }
+requires-python = ">=3.10"
+authors = [
+  { name = "Daniel Olagunju", email = "todak2000@gmail.com" },
+  { name = "Temitope Olarewaju", email = "temitope@futuxconsult.com" },
+]
+keywords = ["data quality", "DQI", "data governance", "DPI", "Africa"]
+classifiers = [
+  "Development Status :: 4 - Beta",
+  "Intended Audience :: Developers",
+  "License :: OSI Approved :: Apache Software License",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Topic :: Scientific/Engineering :: Information Analysis",
+]
+dependencies = [
+  "pandas>=2.0",
+  "pydantic>=2.0",
+  "click>=8.1",
+  "jellyfish>=1.0",
+  "jinja2>=3.1",
+  "pyyaml>=6.0",
+  "scipy>=1.11",
+]
+
+[project.scripts]
+dqi = "dqi.cli:main"
+
+[project.optional-dependencies]
+dev = ["pytest>=8.0", "pytest-cov", "faker>=24.0", "ruff"]
+
+[tool.hatch.build.targets.wheel]
+packages = ["dqi"]
+
+[tool.hatch.build.targets.wheel.force-include]
+"dqi/schemas" = "dqi/schemas"

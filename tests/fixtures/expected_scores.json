@@ -1,0 +1,32 @@
+{
+  "agriculture_clean": {
+    "overall_min": 90.0,
+    "completeness_min": 95.0,
+    "validity_min": 90.0,
+    "uniqueness_min": 95.0,
+    "outliers_min": 95.0,
+    "note": "Clean fixture; all dimensions should score near 100."
+  },
+  "agriculture_dirty": {
+    "overall_max": 80.0,
+    "completeness_max": 90.0,
+    "note": "D1: 20/200 null phone_numbers -> completeness ~90%; D2: 10 lat outliers -> validity and outlier penalty; D3: 8 fuzzy duplicate rows -> uniqueness penalty; D4: 5 extreme farm_area_ha -> outlier penalty."
+  },
+  "voter_registry_clean": {
+    "overall_min": 90.0,
+    "completeness_min": 95.0,
+    "note": "Clean voter fixture; should score near 100 on all dimensions."
+  },
+  "voter_registry_dirty": {
+    "overall_max": 85.0,
+    "note": "D1: 15 null dob -> completeness penalty; D2: 5 duplicate voter_id -> uniqueness penalty; D3: 8 invalid gender -> validity penalty."
+  },
+  "credit_applicants_clean": {
+    "overall_min": 90.0,
+    "note": "Clean credit fixture; should score near 100."
+  },
+  "credit_applicants_dirty": {
+    "overall_max": 85.0,
+    "note": "D1: 12 null emails -> completeness penalty; D2: 7 invalid phone formats -> validity penalty; D3: 10 extreme income outliers -> outlier penalty."
+  }
+}

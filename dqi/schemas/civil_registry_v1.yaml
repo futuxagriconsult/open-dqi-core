@@ -1,0 +1,79 @@
+entity_label: CitizenRecord
+
+dimensions:
+  weights:
+    completeness: 0.25
+    validity: 0.35
+    uniqueness: 0.25
+    outliers: 0.15
+
+fields:
+  national_id:
+    type: id
+    required: true
+    unique_key: true
+
+  full_name:
+    type: text
+    required: true
+    fuzzy_key: true
+
+  date_of_birth:
+    type: date
+    required: true
+    min: "1900-01-01"
+    max: "2015-12-31"
+
+  gender:
+    type: enum
+    required: true
+    allowed_values:
+      - Male
+      - Female
+      - Other
+
+  state_of_origin:
+    type: enum
+    required: true
+    allowed_values:
+      - Abia
+      - Adamawa
+      - Akwa Ibom
+      - Anambra
+      - Bauchi
+      - Bayelsa
+      - Benue
+      - Borno
+      - Cross River
+      - Delta
+      - Ebonyi
+      - Edo
+      - Ekiti
+      - Enugu
+      - Gombe
+      - Imo
+      - Jigawa
+      - Kaduna
+      - Kano
+      - Katsina
+      - Kebbi
+      - Kogi
+      - Kwara
+      - Lagos
+      - Nasarawa
+      - Niger
+      - Ogun
+      - Ondo
+      - Osun
+      - Oyo
+      - Plateau
+      - Rivers
+      - Sokoto
+      - Taraba
+      - Yobe
+      - Zamfara
+      - FCT
+
+  phone:
+    type: phone
+    required: false

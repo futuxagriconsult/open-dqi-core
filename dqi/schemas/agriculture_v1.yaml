@@ -1,0 +1,118 @@
+entity_label: SmallholderFarmer
+
+dimensions:
+  weights:
+    completeness: 0.25
+    validity: 0.35
+    uniqueness: 0.25
+    outliers: 0.15
+
+fields:
+  farmer_id:
+    type: id
+    required: true
+    unique_key: true
+
+  full_name:
+    type: text
+    required: true
+    fuzzy_key: true
+
+  phone_number:
+    type: phone
+    required: true
+
+  state:
+    type: enum
+    required: true
+    allowed_values:
+      - Abia
+      - Adamawa
+      - Akwa Ibom
+      - Anambra
+      - Bauchi
+      - Bayelsa
+      - Benue
+      - Borno
+      - Cross River
+      - Delta
+      - Ebonyi
+      - Edo
+      - Ekiti
+      - Enugu
+      - Gombe
+      - Imo
+      - Jigawa
+      - Kaduna
+      - Kano
+      - Katsina
+      - Kebbi
+      - Kogi
+      - Kwara
+      - Lagos
+      - Nasarawa
+      - Niger
+      - Ogun
+      - Ondo
+      - Osun
+      - Oyo
+      - Plateau
+      - Rivers
+      - Sokoto
+      - Taraba
+      - Yobe
+      - Zamfara
+      - FCT
+
+  lga:
+    type: text
+    required: false
+
+  latitude:
+    type: latitude
+    required: false
+    min: 3.0
+    max: 14.0
+
+  longitude:
+    type: longitude
+    required: false
+    min: 3.0
+    max: 15.0
+
+  farm_area_ha:
+    type: float
+    required: false
+    min: 0.01
+    max: 500.0
+
+  crop_type:
+    type: enum
+    required: false
+    allowed_values:
+      - Maize
+      - Rice
+      - Cassava
+      - Yam
+      - Sorghum
+      - Millet
+      - Groundnut
+      - Cowpea
+      - Soybean
+      - Tomato
+      - Pepper
+      - Other
+
+  age:
+    type: integer
+    required: false
+    min: 18
+    max: 99
+
+  gender:
+    type: enum
+    required: false
+    allowed_values:
+      - Male
+      - Female
+      - Other

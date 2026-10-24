@@ -1,0 +1,50 @@
+entity_label: LoanApplicant
+
+dimensions:
+  weights:
+    completeness: 0.25
+    validity: 0.35
+    uniqueness: 0.25
+    outliers: 0.15
+
+fields:
+  applicant_id:
+    type: id
+    required: true
+    unique_key: true
+
+  full_name:
+    type: text
+    required: true
+    fuzzy_key: true
+
+  phone:
+    type: phone
+    required: true
+
+  email:
+    type: email
+    required: true
+
+  monthly_income:
+    type: float
+    required: true
+    min: 0.0
+
+  age:
+    type: integer
+    required: true
+    min: 18
+    max: 99
+
+  gender:
+    type: enum
+    required: false
+    allowed_values:
+      - Male
+      - Female
+      - Other
+
+  region:
+    type: text
+    required: false

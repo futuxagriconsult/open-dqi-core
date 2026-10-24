@@ -1,0 +1,46 @@
+entity_label: Beneficiary
+
+dimensions:
+  weights:
+    completeness: 0.25
+    validity: 0.35
+    uniqueness: 0.25
+    outliers: 0.15
+
+fields:
+  beneficiary_id:
+    type: id
+    required: true
+    unique_key: true
+
+  full_name:
+    type: text
+    required: true
+    fuzzy_key: true
+
+  phone:
+    type: phone
+    required: true
+
+  household_size:
+    type: integer
+    required: true
+    min: 1
+    max: 30
+
+  district:
+    type: text
+    required: true
+
+  gender:
+    type: enum
+    required: true
+    allowed_values:
+      - Male
+      - Female
+      - Other
+
+  registration_date:
+    type: date
+    required: true
+    min: "2000-01-01"
