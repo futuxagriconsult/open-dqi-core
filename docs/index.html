@@ -10,14 +10,14 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
 <style>
   :root {
-    /* Brand Foundation */
+    /* Brand Colors */
     --futux-petrol: #0B3541;
     --futux-cyan: #0FBFF1;
     --futux-orange: #FF914D;
     --emerald: #10B981;
     --rose: #EF4444;
 
-    /* Light Theme (Default: Minimalist Clean White) */
+    /* Light Theme (Minimalist Clean White) */
     --bg: #FFFFFF;
     --bg-alt: #F8FAFC;
     --card-bg: #FFFFFF;
@@ -29,7 +29,6 @@
     --text-muted: #94A3B8;
     --accent-primary: #0284C7;
     --accent-primary-hover: #0369A1;
-    --accent-glow: rgba(2, 132, 199, 0.12);
     --badge-bg: rgba(11, 53, 65, 0.05);
     --badge-border: rgba(11, 53, 65, 0.15);
     --badge-text: #0B3541;
@@ -41,6 +40,7 @@
     --table-border: #E2E8F0;
     --code-bg: #F8FAFC;
     --code-border: #E2E8F0;
+    --guide-bg: #F1F5F9;
     --radius-sm: 8px;
     --radius-md: 12px;
     --radius-lg: 18px;
@@ -48,7 +48,7 @@
   }
 
   [data-theme="dark"] {
-    /* Dark Theme (Pure Black minimalist) */
+    /* Dark Theme (Pure Black Minimalist) */
     --bg: #000000;
     --bg-alt: #080D14;
     --card-bg: #0A1017;
@@ -60,7 +60,6 @@
     --text-muted: #64748B;
     --accent-primary: #0FBFF1;
     --accent-primary-hover: #38BDF8;
-    --accent-glow: rgba(15, 191, 241, 0.25);
     --badge-bg: rgba(15, 191, 241, 0.08);
     --badge-border: rgba(15, 191, 241, 0.2);
     --badge-text: #0FBFF1;
@@ -72,6 +71,7 @@
     --table-border: #1E293B;
     --code-bg: #050B12;
     --code-border: #1E293B;
+    --guide-bg: #0B131E;
     --shadow-card: 0 4px 20px 0 rgba(0, 0, 0, 0.5);
   }
 
@@ -88,9 +88,9 @@
   }
   .container { max-width: 1180px; margin: 0 auto; }
 
-  /* Header & Navigation Bar */
+  /* Top Navigation */
   .top-nav {
-    display: flex; justify-content: space-between; align-items: center; margin-bottom: 2.5rem;
+    display: flex; justify-content: space-between; align-items: center; margin-bottom: 2.25rem;
     padding-bottom: 1.25rem; border-bottom: 1px solid var(--card-border);
   }
   .brand-group { display: flex; align-items: center; gap: 0.75rem; }
@@ -99,16 +99,18 @@
     background: var(--futux-petrol); display: flex; align-items: center; justify-content: center;
     color: var(--futux-cyan); font-weight: 800; font-size: 0.95rem; font-family: 'JetBrains Mono', monospace;
   }
-  [data-theme="dark"] .brand-logo-mark {
-    background: #0B3541; border: 1px solid var(--futux-cyan);
-  }
+  [data-theme="dark"] .brand-logo-mark { background: #0B3541; border: 1px solid var(--futux-cyan); }
   .brand-name { font-size: 1.05rem; font-weight: 700; color: var(--text-primary); letter-spacing: -0.01em; }
   .brand-tag {
     font-size: 0.72rem; font-weight: 600; padding: 0.2rem 0.55rem; border-radius: 999px;
     background: var(--badge-bg); border: 1px solid var(--badge-border); color: var(--badge-text);
   }
 
-  /* Theme Switcher Button */
+  /* Lucide Icon Styling */
+  .lucide { width: 16px; height: 16px; stroke-width: 2; stroke: currentColor; fill: none; stroke-linecap: round; stroke-linejoin: round; display: inline-block; vertical-align: middle; }
+  .lucide-lg { width: 22px; height: 22px; }
+
+  .nav-actions { display: flex; align-items: center; gap: 0.6rem; }
   .theme-toggle {
     display: inline-flex; align-items: center; gap: 0.45rem;
     background: var(--card-surface); border: 1px solid var(--card-border);
@@ -118,11 +120,11 @@
   .theme-toggle:hover { color: var(--text-primary); border-color: var(--card-border-hover); }
 
   /* Hero Section */
-  .hero { text-align: left; margin-bottom: 2.25rem; }
-  h1 { font-size: 2.4rem; font-weight: 800; letter-spacing: -0.03em; margin-bottom: 0.4rem; line-height: 1.15; }
+  .hero { text-align: left; margin-bottom: 2rem; }
+  h1 { font-size: 2.35rem; font-weight: 800; letter-spacing: -0.03em; margin-bottom: 0.4rem; line-height: 1.15; }
   h1 span.cyan { color: var(--futux-cyan); }
   h1 span.orange { color: var(--futux-orange); }
-  p.subtitle { color: var(--text-secondary); font-size: 1rem; max-width: 720px; }
+  p.subtitle { color: var(--text-secondary); font-size: 1rem; max-width: 740px; }
 
   .privacy-strip {
     margin: 1.25rem 0 0;
@@ -131,6 +133,26 @@
     display: flex; align-items: center; gap: 0.65rem; font-size: 0.82rem; color: var(--text-secondary);
   }
   .privacy-strip strong { color: var(--text-primary); }
+
+  /* Guide Drawer */
+  .guide-card {
+    background: var(--guide-bg); border: 1px solid var(--card-border);
+    border-radius: var(--radius-md); margin-bottom: 1.5rem; overflow: hidden;
+  }
+  .guide-header {
+    padding: 0.85rem 1.25rem; cursor: pointer; display: flex; justify-content: space-between; align-items: center;
+    font-size: 0.85rem; font-weight: 700; color: var(--text-primary);
+  }
+  .guide-header:hover { background: var(--table-row-hover); }
+  .guide-content {
+    padding: 1.25rem; border-top: 1px solid var(--card-border);
+    font-size: 0.82rem; color: var(--text-secondary); display: none;
+  }
+  .guide-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1rem; margin-top: 0.75rem; }
+  .guide-box {
+    background: var(--card-bg); border: 1px solid var(--card-border); border-radius: var(--radius-sm); padding: 0.85rem;
+  }
+  .guide-box strong { color: var(--text-primary); display: block; margin-bottom: 0.25rem; font-size: 0.82rem; }
 
   /* Card Component */
   .card {
@@ -143,7 +165,7 @@
     transition: border-color 0.2s ease, background-color 0.2s ease;
   }
 
-  /* Upload Dropzone */
+  /* Dropzone */
   .dropzone {
     border: 2px dashed var(--dropzone-border); border-radius: var(--radius-md);
     padding: 2.25rem 1.5rem; text-align: center; cursor: pointer;
@@ -153,21 +175,19 @@
     border-color: var(--futux-cyan); background: var(--dropzone-hover);
   }
   .upload-icon {
-    width: 40px; height: 40px; margin: 0 auto 0.75rem;
+    width: 44px; height: 44px; margin: 0 auto 0.75rem;
     border-radius: 50%; background: var(--badge-bg);
     display: flex; align-items: center; justify-content: center; color: var(--accent-primary);
   }
 
-  /* Buttons & Controls */
+  /* Buttons */
   .btn {
-    display: inline-flex; align-items: center; gap: 0.4rem;
+    display: inline-flex; align-items: center; gap: 0.45rem;
     padding: 0.5rem 1rem; border-radius: var(--radius-sm);
     font-size: 0.8rem; font-weight: 600; cursor: pointer; transition: all 0.2s;
     font-family: inherit;
   }
-  .btn-primary {
-    background: var(--accent-primary); color: #FFFFFF; border: none;
-  }
+  .btn-primary { background: var(--accent-primary); color: #FFFFFF; border: none; }
   .btn-primary:hover { opacity: 0.92; }
   .btn-secondary {
     background: var(--card-surface); border: 1px solid var(--card-border);
@@ -191,7 +211,7 @@
     border-color: var(--accent-primary);
   }
 
-  /* Metric Cards Grid */
+  /* Metric Cards */
   .grid-metrics {
     display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 1rem;
     margin-bottom: 1.5rem;
@@ -256,10 +276,15 @@
         <span class="brand-tag">DPI Middleware</span>
       </div>
     </div>
-    <button class="theme-toggle" id="theme-btn" onclick="toggleTheme()">
-      <span id="theme-icon">🌙</span>
-      <span id="theme-label">Dark Mode</span>
-    </button>
+    <div class="nav-actions">
+      <button class="theme-toggle" id="theme-btn" onclick="toggleTheme()">
+        <span id="theme-icon-container">
+          <!-- Sun icon -->
+          <svg class="lucide" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>
+        </span>
+        <span id="theme-label">Dark Mode</span>
+      </button>
+    </div>
   </div>
 
   <div class="hero">
@@ -267,8 +292,45 @@
     <p class="subtitle">Deterministic, in-browser Data Quality Index evaluation. Upload any CSV tabular dataset to inspect Completeness, Validity, Uniqueness, and Outlier fences with zero server egress.</p>
     
     <div class="privacy-strip">
-      <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-      <div><strong>Complete Privacy Guarantee:</strong> 100% Client-side. Your dataset never leaves your browser. All statistical checks execute locally on your CPU.</div>
+      <svg class="lucide" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+      <div><strong>Complete Privacy Guarantee:</strong> 100% Client-side. Your dataset never leaves your browser. All statistical checks execute locally on your machine.</div>
+    </div>
+  </div>
+
+  <!-- Interactive Guide & Use Cases Drawer -->
+  <div class="guide-card">
+    <div class="guide-header" onclick="toggleGuide()">
+      <div style="display: flex; align-items: center; gap: 0.5rem;">
+        <svg class="lucide" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
+        <span>Use Cases &amp; How Open-DQI Evaluates Any Tabular CSV</span>
+      </div>
+      <div style="display: flex; align-items: center; gap: 0.35rem; font-size: 0.75rem; color: var(--accent-primary);">
+        <span id="guide-toggle-text">Show Guide</span>
+        <svg id="guide-arrow" class="lucide" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></svg>
+      </div>
+    </div>
+    <div class="guide-content" id="guide-content">
+      <p style="margin-bottom: 0.75rem; line-height: 1.5;">
+        <strong>Does Open-DQI discriminate columns? No!</strong> Open-DQI is column-agnostic. It does not require specific column headers:
+      </p>
+      <div class="guide-grid">
+        <div class="guide-box">
+          <strong>1. Completeness (25%)</strong>
+          Evaluates 100% of all columns in your dataset. Flags empty strings, <code>null</code>, <code>NaN</code>, <code>None</code>, and placeholder characters (<code>-</code>, <code>n/a</code>).
+        </div>
+        <div class="guide-box">
+          <strong>2. Validity (35%)</strong>
+          Auto-detects semantic patterns: emails (<code>@</code>), international phones (<code>+234</code>, <code>+254</code>), GPS bounds, dates, and flags non-numeric values in numeric columns.
+        </div>
+        <div class="guide-box">
+          <strong>3. Uniqueness (25%)</strong>
+          If an ID column exists (<code>id</code>, <code>nin</code>, <code>code</code>), it checks for key collisions. If not, it compares the full row tuple to detect identical duplicates.
+        </div>
+        <div class="guide-box">
+          <strong>4. Outliers (15%)</strong>
+          Applies Tukey IQR fences ($Q_1 - 1.5\text{IQR}, Q_3 + 1.5\text{IQR}$) across all detected numeric fields (e.g. income, farm size, age, revenue).
+        </div>
+      </div>
     </div>
   </div>
 
@@ -278,13 +340,17 @@
         <h2 style="font-size: 1.15rem; font-weight: 700;">Upload Tabular CSV or Audit Pre-loaded Benchmarks</h2>
         <p style="font-size: 0.8rem; color: var(--text-secondary);">Works with any tabular schema (agriculture, credit scoring, voters, sales, logistics).</p>
       </div>
-      <div style="display: flex; gap: 0.5rem;">
+      <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
+        <button class="btn btn-secondary" onclick="downloadStarterTemplate()">
+          <svg class="lucide" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
+          Download Starter Template
+        </button>
         <button class="btn btn-secondary" onclick="exportReportJSON()">
-          <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M17 8l-5-5-5 5M12 3v12"/></svg>
+          <svg class="lucide" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
           Export JSON
         </button>
         <button class="btn btn-primary" onclick="document.getElementById('csv-file-input').click()">
-          <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 4v16m8-8H4"/></svg>
+          <svg class="lucide" viewBox="0 0 24 24"><path d="M12 4v16m8-8H4"/></svg>
           Upload CSV
         </button>
       </div>
@@ -292,7 +358,7 @@
 
     <div class="dropzone" id="dropzone" onclick="document.getElementById('csv-file-input').click()">
       <div class="upload-icon">
-        <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M17 8l-5-5-5 5M12 3v12"/></svg>
+        <svg class="lucide lucide-lg" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M17 8l-5-5-5 5M12 3v12"/></svg>
       </div>
       <div style="font-weight: 700; font-size: 0.95rem; margin-bottom: 0.2rem;">Click to upload or drag &amp; drop ANY tabular CSV file</div>
       <div style="font-size: 0.78rem; color: var(--text-muted);">Auto-detects data types, checks missing values, validates formatting, and detects Tukey IQR anomalies</div>
@@ -392,7 +458,10 @@
 </div>
 
 <script>
-// --- Theme Switcher ---
+// --- Theme Switcher (Vector Lucide Icons) ---
+const SUN_SVG = `<svg class="lucide" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>`;
+const MOON_SVG = `<svg class="lucide" viewBox="0 0 24 24"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>`;
+
 function initTheme() {
   const saved = localStorage.getItem("futux-theme");
   if (saved) {
@@ -407,13 +476,13 @@ function initTheme() {
 function setTheme(theme) {
   document.documentElement.setAttribute("data-theme", theme);
   localStorage.setItem("futux-theme", theme);
-  const icon = document.getElementById("theme-icon");
+  const iconContainer = document.getElementById("theme-icon-container");
   const label = document.getElementById("theme-label");
   if (theme === "dark") {
-    icon.innerText = "☀️";
+    iconContainer.innerHTML = SUN_SVG;
     label.innerText = "Light Mode";
   } else {
-    icon.innerText = "🌙";
+    iconContainer.innerHTML = MOON_SVG;
     label.innerText = "Dark Mode";
   }
 }
@@ -421,6 +490,16 @@ function setTheme(theme) {
 function toggleTheme() {
   const current = document.documentElement.getAttribute("data-theme");
   setTheme(current === "dark" ? "light" : "dark");
+}
+
+function toggleGuide() {
+  const content = document.getElementById("guide-content");
+  const text = document.getElementById("guide-toggle-text");
+  const arrow = document.getElementById("guide-arrow");
+  const isHidden = content.style.display === "none" || content.style.display === "";
+  content.style.display = isHidden ? "block" : "none";
+  text.innerText = isHidden ? "Hide Guide" : "Show Guide";
+  arrow.style.transform = isHidden ? "rotate(180deg)" : "rotate(0deg)";
 }
 
 initTheme();
@@ -620,7 +699,6 @@ function auditUniversalTabularData(rows, filename) {
   const lonCols = cols.filter(c => /lon|longitude|lng/i.test(c));
 
   rows.forEach((r, idx) => {
-    // Standard phone validation
     phoneCols.forEach(col => {
       const v = String(r[col] || "").trim();
       if (v && !/^\+?[0-9]{7,15}$/.test(v.replace(/[\s-]/g, ''))) {
@@ -628,7 +706,6 @@ function auditUniversalTabularData(rows, filename) {
         if (issues.length < 80) issues.push({ row: idx + 1, field: col, dim: "validity", reason: `invalid_phone_format_${v}` });
       }
     });
-    // Email validation
     emailCols.forEach(col => {
       const v = String(r[col] || "").trim();
       if (v && !emailRegex.test(v)) {
@@ -636,7 +713,6 @@ function auditUniversalTabularData(rows, filename) {
         if (issues.length < 80) issues.push({ row: idx + 1, field: col, dim: "validity", reason: `invalid_email_syntax_${v}` });
       }
     });
-    // Coordinates validation
     latCols.forEach(col => {
       const v = parseFloat(r[col]);
       if (!isNaN(v) && (v < -90 || v > 90)) {
@@ -651,7 +727,6 @@ function auditUniversalTabularData(rows, filename) {
         if (issues.length < 80) issues.push({ row: idx + 1, field: col, dim: "validity", reason: `longitude_out_of_bounds_[${v}]` });
       }
     });
-    // Numeric type purity for columns detected as Numeric
     cols.forEach(col => {
       if (colTypes[col] === "Numeric") {
         const v = String(r[col] || "").trim();
@@ -664,12 +739,11 @@ function auditUniversalTabularData(rows, filename) {
   });
   const validityScore = Math.max(0, 100 - (invalidCount / Math.max(1, totalRows)) * 100);
 
-  // 3. UNIQUENESS CHECK (ID key collision or full row duplicate)
+  // 3. UNIQUENESS CHECK
   const idCol = cols.find(c => /id|nin|code|bvn|uuid|key/i.test(c));
   const seenKeys = new Set();
   let duplicateCount = 0;
   rows.forEach((r, idx) => {
-    // If ID exists, check ID. Else check hash of all fields.
     const key = idCol ? String(r[idCol] || "").trim() : JSON.stringify(r);
     if (key) {
       if (seenKeys.has(key)) {
@@ -689,7 +763,7 @@ function auditUniversalTabularData(rows, filename) {
   });
   const uniquenessScore = Math.max(0, 100 - (duplicateCount / Math.max(1, totalRows)) * 100);
 
-  // 4. OUTLIER DETECTION (Tukey IQR fences across all numeric columns)
+  // 4. OUTLIER DETECTION (Tukey IQR)
   let outlierCount = 0;
   cols.forEach(col => {
     if (colTypes[col] === "Numeric" && !/id|phone|year|zip|code/i.test(col)) {
@@ -740,6 +814,25 @@ function auditUniversalTabularData(rows, filename) {
     issues: issues,
     source: filename
   });
+}
+
+// Download Starter Template CSV
+function downloadStarterTemplate() {
+  const headers = "beneficiary_id,full_name,phone_number,email,state,latitude,longitude,monthly_income\n";
+  const rows = [
+    'BEN-001,Amina Bello,+2348012345678,amina.bello@example.com,Kano,12.0022,8.5920,45000',
+    'BEN-002,Chukwuemeka Obi,+2348023456789,c.obi@example.com,Enugu,6.4584,7.5464,82000',
+    'BEN-003,Babajide Sanwo,+2348034567890,b.sanwo@example.com,Lagos,6.5244,3.3792,125000',
+    'BEN-004,Fatima Abubakar,+2348045678901,fatima.a@example.com,Kaduna,10.5105,7.4165,38000',
+    'BEN-005,Tariro Moyo,+254711223344,tariro@example.com,Nairobi,-1.2921,36.8219,55000'
+  ].join("\n");
+
+  const blob = new Blob([headers + rows], { type: "text/csv;charset=utf-8;" });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = "futux_dqi_audit_template.csv";
+  a.click();
 }
 
 function exportReportJSON() {
