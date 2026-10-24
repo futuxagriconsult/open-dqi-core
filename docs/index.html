@@ -262,6 +262,51 @@
     padding: 0.15rem 0.45rem; border-radius: 4px; color: var(--text-secondary);
   }
 
+  /* Pagination Bar (Top & Bottom) */
+  .pagination-bar {
+    display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center;
+    gap: 0.75rem; padding: 0.75rem 0; font-size: 0.78rem; color: var(--text-secondary);
+  }
+  .pagination-bar.top {
+    border-bottom: 1px solid var(--table-border); margin-bottom: 0.5rem;
+  }
+  .pagination-bar.bottom {
+    border-top: 1px solid var(--table-border); margin-top: 0.75rem;
+  }
+  .pagination-info {
+    display: flex; align-items: center; gap: 0.75rem; font-family: 'JetBrains Mono', monospace; font-size: 0.75rem;
+  }
+  .page-size-select {
+    background: var(--card-surface); border: 1px solid var(--card-border);
+    color: var(--text-primary); border-radius: var(--radius-sm); padding: 0.25rem 0.5rem;
+    font-size: 0.75rem; font-family: inherit; outline: none; cursor: pointer;
+  }
+  .pagination-nav {
+    display: flex; align-items: center; gap: 0.35rem;
+  }
+  .page-btn {
+    background: var(--card-surface); border: 1px solid var(--card-border);
+    color: var(--text-primary); min-width: 30px; height: 30px; padding: 0 0.5rem;
+    border-radius: var(--radius-sm); display: inline-flex; align-items: center; justify-content: center;
+    font-size: 0.75rem; font-weight: 600; font-family: 'JetBrains Mono', monospace;
+    cursor: pointer; transition: all 0.15s;
+  }
+  .page-btn:hover:not(:disabled) {
+    border-color: var(--accent-primary); color: var(--accent-primary);
+  }
+  .page-btn.active {
+    background: var(--accent-primary); color: #FFFFFF; border-color: var(--accent-primary);
+  }
+  .page-btn:disabled {
+    opacity: 0.35; cursor: not-allowed;
+  }
+  .page-ellipsis {
+    padding: 0 0.25rem; color: var(--text-muted); font-family: 'JetBrains Mono', monospace;
+  }
+  .page-summary {
+    font-size: 0.75rem; color: var(--text-muted); margin-left: 0.35rem; font-family: 'JetBrains Mono', monospace;
+  }
+
   footer { text-align: center; color: var(--text-muted); font-size: 0.8rem; margin-top: 3.5rem; }
   footer a { color: var(--accent-primary); text-decoration: none; }
 </style>
@@ -418,9 +463,9 @@
     </div>
   </div>
 
-  <!-- Detailed Audit Table -->
+  <!-- Detailed Audit Table with Top and Bottom Pagination -->
   <div class="card">
-    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; flex-wrap: wrap; gap: 0.5rem;">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.75rem; flex-wrap: wrap; gap: 0.5rem;">
       <div>
         <h3 style="font-size: 1.05rem; font-weight: 700;">Audit Issue Inspector (<span id="issues-count">0</span> defects flagged)</h3>
         <p style="font-size: 0.75rem; color: var(--text-secondary);" id="meta-records">200 evaluated records</p>
@@ -433,14 +478,18 @@
         <button class="pill-btn" onclick="filterIssues('outliers', this)">Outliers</button>
       </div>
     </div>
-    <div style="max-height: 420px; overflow-y: auto;">
+
+    <!-- Top Pagination Bar -->
+    <div id="pagination-top" class="pagination-bar top"></div>
+
+    <div style="max-height: 480px; overflow-y: auto;">
       <table id="issues-table">
         <thead>
           <tr>
-            <th>#</th>
-            <th>Row</th>
-            <th>Field</th>
-            <th>Dimension</th>
+            <th style="width: 60px;">#</th>
+            <th style="width: 100px;">Row</th>
+            <th style="width: 180px;">Field</th>
+            <th style="width: 130px;">Dimension</th>
             <th>Violation Details</th>
           </tr>
         </thead>
@@ -449,6 +498,9 @@
         </tbody>
       </table>
     </div>
+
+    <!-- Bottom Pagination Bar -->
+    <div id="pagination-bottom" class="pagination-bar bottom"></div>
   </div>
 
   <footer>
@@ -504,9 +556,11 @@ function toggleGuide() {
 
 initTheme();
 
-// --- Audit Logic ---
+// --- Audit Logic & Pagination State ---
 let currentAuditResult = { dqi: 100, grade: "A", c: 100, v: 100, u: 100, o: 100, records: 200, issues: [] };
 let activeFilter = 'all';
+let currentPage = 1;
+let pageSize = 20;
 
 const SAMPLES = {
   agriculture: {
@@ -538,6 +592,7 @@ const SAMPLES = {
 
 function renderUI(res) {
   currentAuditResult = res;
+  currentPage = 1;
   document.getElementById("stat-dqi").innerText = res.dqi.toFixed(2);
   const gradeEl = document.getElementById("stat-grade");
   gradeEl.innerText = "GRADE " + res.grade;
@@ -564,18 +619,31 @@ function renderUI(res) {
   renderIssuesTable();
 }
 
-function renderIssuesTable() {
-  const tbody = document.getElementById("issues-body");
-  const filtered = activeFilter === 'all' 
+function getFilteredIssues() {
+  return activeFilter === 'all' 
     ? currentAuditResult.issues 
     : currentAuditResult.issues.filter(it => it.dim === activeFilter);
+}
 
-  if (filtered.length === 0) {
+function renderIssuesTable() {
+  const filtered = getFilteredIssues();
+  const total = filtered.length;
+  const totalPages = Math.max(1, Math.ceil(total / pageSize));
+
+  if (currentPage > totalPages) currentPage = totalPages;
+  if (currentPage < 1) currentPage = 1;
+
+  const startIdx = (currentPage - 1) * pageSize;
+  const endIdx = Math.min(startIdx + pageSize, total);
+  const pageItems = filtered.slice(startIdx, endIdx);
+
+  const tbody = document.getElementById("issues-body");
+  if (total === 0) {
     tbody.innerHTML = '<tr><td colspan="5" style="text-align: center; color: var(--emerald); padding: 2.5rem;">No defects found for the selected filter. Pass!</td></tr>';
   } else {
-    tbody.innerHTML = filtered.map((it, idx) => `
+    tbody.innerHTML = pageItems.map((it, idx) => `
       <tr>
-        <td>${idx + 1}</td>
+        <td>${startIdx + idx + 1}</td>
         <td>Row #${it.row}</td>
         <td><code>${it.field}</code></td>
         <td><span class="dim-pill dim-${it.dim}">${it.dim}</span></td>
@@ -583,10 +651,103 @@ function renderIssuesTable() {
       </tr>
     `).join("");
   }
+
+  renderPaginationControls(total, totalPages, startIdx, endIdx);
+}
+
+function renderPaginationControls(total, totalPages, startIdx, endIdx) {
+  const topEl = document.getElementById("pagination-top");
+  const bottomEl = document.getElementById("pagination-bottom");
+
+  const windowText = total === 0 
+    ? "Showing 0 defects" 
+    : `Showing ${startIdx + 1}&ndash;${endIdx} of ${total} defects`;
+
+  // Generate page number buttons with smart windowing
+  let pageButtonsHTML = "";
+  const maxButtons = 7;
+  let startP = 1, endP = totalPages;
+
+  if (totalPages > maxButtons) {
+    if (currentPage <= 4) {
+      endP = 5;
+    } else if (currentPage >= totalPages - 3) {
+      startP = totalPages - 4;
+    } else {
+      startP = currentPage - 2;
+      endP = currentPage + 2;
+    }
+  }
+
+  // Previous button
+  pageButtonsHTML += `
+    <button class="page-btn" onclick="goToPage(${currentPage - 1})" ${currentPage === 1 ? 'disabled' : ''} title="Previous Page">
+      <svg class="lucide" viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
+    </button>
+  `;
+
+  // First page + ellipsis if needed
+  if (startP > 1) {
+    pageButtonsHTML += `<button class="page-btn" onclick="goToPage(1)">1</button>`;
+    if (startP > 2) pageButtonsHTML += `<span class="page-ellipsis">&hellip;</span>`;
+  }
+
+  // Numbered pages
+  for (let p = startP; p <= endP; p++) {
+    pageButtonsHTML += `
+      <button class="page-btn ${p === currentPage ? 'active' : ''}" onclick="goToPage(${p})">${p}</button>
+    `;
+  }
+
+  // Last page + ellipsis if needed
+  if (endP < totalPages) {
+    if (endP < totalPages - 1) pageButtonsHTML += `<span class="page-ellipsis">&hellip;</span>`;
+    pageButtonsHTML += `<button class="page-btn" onclick="goToPage(${totalPages})">${totalPages}</button>`;
+  }
+
+  // Next button
+  pageButtonsHTML += `
+    <button class="page-btn" onclick="goToPage(${currentPage + 1})" ${currentPage === totalPages || totalPages === 0 ? 'disabled' : ''} title="Next Page">
+      <svg class="lucide" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
+    </button>
+  `;
+
+  const controlsHTML = `
+    <div class="pagination-info">
+      <span>${windowText}</span>
+      <label style="display: inline-flex; align-items: center; gap: 0.35rem; color: var(--text-muted);">
+        Per page:
+        <select class="page-size-select" onchange="setPageSize(this.value)">
+          <option value="20" ${pageSize === 20 ? 'selected' : ''}>20</option>
+          <option value="50" ${pageSize === 50 ? 'selected' : ''}>50</option>
+          <option value="100" ${pageSize === 100 ? 'selected' : ''}>100</option>
+        </select>
+      </label>
+    </div>
+    <div class="pagination-nav">
+      ${pageButtonsHTML}
+      <span class="page-summary">Page ${currentPage} of ${totalPages}</span>
+    </div>
+  `;
+
+  topEl.innerHTML = controlsHTML;
+  bottomEl.innerHTML = controlsHTML;
+}
+
+function goToPage(p) {
+  currentPage = p;
+  renderIssuesTable();
+}
+
+function setPageSize(val) {
+  pageSize = parseInt(val, 10);
+  currentPage = 1;
+  renderIssuesTable();
 }
 
 function filterIssues(dim, btn) {
   activeFilter = dim;
+  currentPage = 1;
   document.querySelectorAll(".pill-btn").forEach(b => {
     if (b.innerText.toLowerCase().includes(dim) || (dim === 'all' && b.innerText === 'All Issues')) {
       b.classList.add("active");
@@ -682,9 +843,7 @@ function auditUniversalTabularData(rows, filename) {
       const val = r[col];
       if (val === undefined || val === null || String(val).trim() === "" || /^(null|none|n\/a|nan|-)$/i.test(String(val).trim())) {
         emptyCells++;
-        if (issues.length < 50) {
-          issues.push({ row: idx + 1, field: col, dim: "completeness", reason: "missing_or_placeholder_value" });
-        }
+        issues.push({ row: idx + 1, field: col, dim: "completeness", reason: "missing_or_placeholder_value" });
       }
     });
   });
@@ -703,28 +862,28 @@ function auditUniversalTabularData(rows, filename) {
       const v = String(r[col] || "").trim();
       if (v && !/^\+?[0-9]{7,15}$/.test(v.replace(/[\s-]/g, ''))) {
         invalidCount++;
-        if (issues.length < 80) issues.push({ row: idx + 1, field: col, dim: "validity", reason: `invalid_phone_format_${v}` });
+        issues.push({ row: idx + 1, field: col, dim: "validity", reason: `invalid_phone_format_${v}` });
       }
     });
     emailCols.forEach(col => {
       const v = String(r[col] || "").trim();
       if (v && !emailRegex.test(v)) {
         invalidCount++;
-        if (issues.length < 80) issues.push({ row: idx + 1, field: col, dim: "validity", reason: `invalid_email_syntax_${v}` });
+        issues.push({ row: idx + 1, field: col, dim: "validity", reason: `invalid_email_syntax_${v}` });
       }
     });
     latCols.forEach(col => {
       const v = parseFloat(r[col]);
       if (!isNaN(v) && (v < -90 || v > 90)) {
         invalidCount++;
-        if (issues.length < 80) issues.push({ row: idx + 1, field: col, dim: "validity", reason: `latitude_out_of_bounds_[${v}]` });
+        issues.push({ row: idx + 1, field: col, dim: "validity", reason: `latitude_out_of_bounds_[${v}]` });
       }
     });
     lonCols.forEach(col => {
       const v = parseFloat(r[col]);
       if (!isNaN(v) && (v < -180 || v > 180)) {
         invalidCount++;
-        if (issues.length < 80) issues.push({ row: idx + 1, field: col, dim: "validity", reason: `longitude_out_of_bounds_[${v}]` });
+        issues.push({ row: idx + 1, field: col, dim: "validity", reason: `longitude_out_of_bounds_[${v}]` });
       }
     });
     cols.forEach(col => {
@@ -732,7 +891,7 @@ function auditUniversalTabularData(rows, filename) {
         const v = String(r[col] || "").trim();
         if (v !== "" && isNaN(Number(v))) {
           invalidCount++;
-          if (issues.length < 80) issues.push({ row: idx + 1, field: col, dim: "validity", reason: `non_numeric_in_numeric_col_[${v}]` });
+          issues.push({ row: idx + 1, field: col, dim: "validity", reason: `non_numeric_in_numeric_col_[${v}]` });
         }
       }
     });
@@ -748,14 +907,12 @@ function auditUniversalTabularData(rows, filename) {
     if (key) {
       if (seenKeys.has(key)) {
         duplicateCount++;
-        if (issues.length < 100) {
-          issues.push({ 
-            row: idx + 1, 
-            field: idCol || "row_identity", 
-            dim: "uniqueness", 
-            reason: idCol ? `duplicate_primary_key_${key}` : `duplicate_row_tuple` 
-          });
-        }
+        issues.push({ 
+          row: idx + 1, 
+          field: idCol || "row_identity", 
+          dim: "uniqueness", 
+          reason: idCol ? `duplicate_primary_key_${key}` : `duplicate_row_tuple` 
+        });
       } else {
         seenKeys.add(key);
       }
@@ -782,9 +939,7 @@ function auditUniversalTabularData(rows, filename) {
         numericVals.forEach(item => {
           if (item.val < lower || item.val > upper) {
             outlierCount++;
-            if (issues.length < 120) {
-              issues.push({ row: item.row, field: col, dim: "outliers", reason: `iqr_outlier_value_[${item.val}]_bounds[${lower.toFixed(1)},${upper.toFixed(1)}]` });
-            }
+            issues.push({ row: item.row, field: col, dim: "outliers", reason: `iqr_outlier_value_[${item.val}]_bounds[${lower.toFixed(1)},${upper.toFixed(1)}]` });
           }
         });
       }
