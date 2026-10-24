@@ -1,218 +1,289 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="light">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Open-DQI | Enterprise Data Quality Index Middleware Playground</title>
+<title>Open-DQI | Data Quality Index Playground</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
 <style>
   :root {
+    /* Brand Foundation */
     --futux-petrol: #0B3541;
     --futux-cyan: #0FBFF1;
     --futux-orange: #FF914D;
-    --bg-dark: #050B12;
-    --card-bg: rgba(11, 53, 65, 0.25);
-    --card-surface: rgba(7, 23, 31, 0.7);
-    --card-border: rgba(15, 191, 241, 0.16);
-    --card-border-glow: rgba(15, 191, 241, 0.42);
+    --emerald: #10B981;
+    --rose: #EF4444;
+
+    /* Light Theme (Default: Minimalist Clean White) */
+    --bg: #FFFFFF;
+    --bg-alt: #F8FAFC;
+    --card-bg: #FFFFFF;
+    --card-surface: #F8FAFC;
+    --card-border: #E2E8F0;
+    --card-border-hover: #CBD5E1;
+    --text-primary: #0B3541;
+    --text-secondary: #475569;
+    --text-muted: #94A3B8;
+    --accent-primary: #0284C7;
+    --accent-primary-hover: #0369A1;
+    --accent-glow: rgba(2, 132, 199, 0.12);
+    --badge-bg: rgba(11, 53, 65, 0.05);
+    --badge-border: rgba(11, 53, 65, 0.15);
+    --badge-text: #0B3541;
+    --dropzone-bg: #F8FAFC;
+    --dropzone-border: #CBD5E1;
+    --dropzone-hover: #F0F9FF;
+    --table-header: #F1F5F9;
+    --table-row-hover: #F8FAFC;
+    --table-border: #E2E8F0;
+    --code-bg: #F8FAFC;
+    --code-border: #E2E8F0;
+    --radius-sm: 8px;
+    --radius-md: 12px;
+    --radius-lg: 18px;
+    --shadow-card: 0 1px 3px 0 rgba(0, 0, 0, 0.05), 0 1px 2px -1px rgba(0, 0, 0, 0.05);
+  }
+
+  [data-theme="dark"] {
+    /* Dark Theme (Pure Black minimalist) */
+    --bg: #000000;
+    --bg-alt: #080D14;
+    --card-bg: #0A1017;
+    --card-surface: #0E1622;
+    --card-border: #1E293B;
+    --card-border-hover: rgba(15, 191, 241, 0.4);
     --text-primary: #F8FAFC;
     --text-secondary: #94A3B8;
     --text-muted: #64748B;
-    --emerald: #10B981;
-    --emerald-glow: rgba(16, 185, 129, 0.25);
-    --amber: #FF914D;
-    --rose: #F43F5E;
-    --radius-sm: 8px;
-    --radius-md: 14px;
-    --radius-lg: 20px;
+    --accent-primary: #0FBFF1;
+    --accent-primary-hover: #38BDF8;
+    --accent-glow: rgba(15, 191, 241, 0.25);
+    --badge-bg: rgba(15, 191, 241, 0.08);
+    --badge-border: rgba(15, 191, 241, 0.2);
+    --badge-text: #0FBFF1;
+    --dropzone-bg: #070C12;
+    --dropzone-border: #1E293B;
+    --dropzone-hover: rgba(15, 191, 241, 0.06);
+    --table-header: #0E1622;
+    --table-row-hover: rgba(15, 191, 241, 0.03);
+    --table-border: #1E293B;
+    --code-bg: #050B12;
+    --code-border: #1E293B;
+    --shadow-card: 0 4px 20px 0 rgba(0, 0, 0, 0.5);
   }
+
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
   body {
     font-family: 'Plus Jakarta Sans', -apple-system, sans-serif;
-    background-color: var(--bg-dark);
-    background-image: 
-      radial-gradient(at 0% 0%, rgba(15, 191, 241, 0.14) 0px, transparent 55%),
-      radial-gradient(at 100% 0%, rgba(255, 145, 77, 0.09) 0px, transparent 50%),
-      radial-gradient(at 50% 100%, rgba(11, 53, 65, 0.45) 0px, transparent 65%);
+    background-color: var(--bg);
     color: var(--text-primary);
     min-height: 100vh;
     padding: 2.5rem 1.25rem;
     line-height: 1.5;
+    transition: background-color 0.2s ease, color 0.2s ease;
     -webkit-font-smoothing: antialiased;
   }
-  .container { max-width: 1200px; margin: 0 auto; }
-  
-  header { text-align: center; margin-bottom: 2.25rem; }
-  .brand-pill {
-    display: inline-flex; align-items: center; gap: 0.5rem;
-    padding: 0.38rem 0.95rem; border-radius: 999px;
-    background: rgba(15, 191, 241, 0.08); border: 1px solid var(--card-border);
-    color: var(--futux-cyan); font-size: 0.72rem; font-weight: 700;
-    text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 1rem;
-  }
-  .brand-dot { width: 6px; height: 6px; border-radius: 999px; background: var(--futux-orange); box-shadow: 0 0 8px var(--futux-orange); }
-  h1 { font-size: 2.75rem; font-weight: 800; letter-spacing: -0.03em; margin-bottom: 0.5rem; }
-  h1 span.cyan { color: var(--futux-cyan); }
-  h1 span.orange { color: var(--futux-orange); }
-  p.subtitle { color: var(--text-secondary); font-size: 1rem; max-width: 680px; margin: 0 auto; }
-  
-  .privacy-strip {
-    margin: 1.5rem auto 0; max-width: 780px;
-    background: rgba(11, 53, 65, 0.4); border: 1px solid var(--card-border);
-    border-radius: var(--radius-md); padding: 0.85rem 1.25rem;
-    display: flex; align-items: center; gap: 0.75rem; text-align: left;
-    font-size: 0.8rem; color: #BAE6FD;
-  }
-  .privacy-strip strong { color: #F8FAFC; }
+  .container { max-width: 1180px; margin: 0 auto; }
 
-  .glass-card {
-    background: var(--card-bg);
-    border: 1px solid var(--card-border);
-    backdrop-filter: blur(20px);
-    border-radius: var(--radius-lg);
-    padding: 1.75rem;
-    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.45);
-    margin-bottom: 1.75rem;
-    transition: border-color 0.2s ease;
+  /* Header & Navigation Bar */
+  .top-nav {
+    display: flex; justify-content: space-between; align-items: center; margin-bottom: 2.5rem;
+    padding-bottom: 1.25rem; border-bottom: 1px solid var(--card-border);
   }
-  .glass-card:hover { border-color: var(--card-border-glow); }
-
-  /* Dropzone & Controls */
-  .dropzone {
-    border: 2px dashed rgba(15, 191, 241, 0.32); border-radius: var(--radius-md);
-    padding: 2.25rem 1.5rem; text-align: center; cursor: pointer;
-    background: rgba(11, 53, 65, 0.18); transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
-    margin-bottom: 1.25rem;
+  .brand-group { display: flex; align-items: center; gap: 0.75rem; }
+  .brand-logo-mark {
+    width: 32px; height: 32px; border-radius: 8px;
+    background: var(--futux-petrol); display: flex; align-items: center; justify-content: center;
+    color: var(--futux-cyan); font-weight: 800; font-size: 0.95rem; font-family: 'JetBrains Mono', monospace;
   }
-  .dropzone:hover, .dropzone.dragover {
-    border-color: var(--futux-cyan); background: rgba(15, 191, 241, 0.09);
-    transform: translateY(-1px);
+  [data-theme="dark"] .brand-logo-mark {
+    background: #0B3541; border: 1px solid var(--futux-cyan);
   }
-  .upload-icon {
-    width: 44px; height: 44px; margin: 0 auto 0.75rem;
-    border-radius: 50%; background: rgba(15, 191, 241, 0.12);
-    display: flex; align-items: center; justify-content: center; color: var(--futux-cyan);
+  .brand-name { font-size: 1.05rem; font-weight: 700; color: var(--text-primary); letter-spacing: -0.01em; }
+  .brand-tag {
+    font-size: 0.72rem; font-weight: 600; padding: 0.2rem 0.55rem; border-radius: 999px;
+    background: var(--badge-bg); border: 1px solid var(--badge-border); color: var(--badge-text);
   }
 
-  .controls-bar {
-    display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 1rem;
-    margin-top: 1rem; padding-top: 1rem; border-top: 1px solid rgba(255, 255, 255, 0.06);
-  }
-  .dataset-btn-group { display: flex; flex-wrap: wrap; gap: 0.5rem; align-items: center; }
-  .btn-sample {
-    background: rgba(15, 23, 42, 0.65); border: 1px solid rgba(255, 255, 255, 0.08);
-    color: var(--text-secondary); padding: 0.5rem 1rem; border-radius: 999px;
+  /* Theme Switcher Button */
+  .theme-toggle {
+    display: inline-flex; align-items: center; gap: 0.45rem;
+    background: var(--card-surface); border: 1px solid var(--card-border);
+    color: var(--text-secondary); padding: 0.45rem 0.85rem; border-radius: 999px;
     font-size: 0.78rem; font-weight: 600; cursor: pointer; transition: all 0.2s;
   }
-  .btn-sample:hover { background: rgba(15, 191, 241, 0.12); color: var(--text-primary); border-color: var(--card-border); }
-  .btn-sample.active {
-    background: linear-gradient(135deg, rgba(15, 191, 241, 0.25), rgba(11, 53, 65, 0.8));
-    color: var(--futux-cyan); border-color: var(--futux-cyan);
-    box-shadow: 0 0 15px rgba(15, 191, 241, 0.25);
-  }
+  .theme-toggle:hover { color: var(--text-primary); border-color: var(--card-border-hover); }
 
-  .btn-action {
-    background: linear-gradient(135deg, var(--futux-cyan), #0284C7);
-    color: #042F2E; border: none; padding: 0.55rem 1.15rem; border-radius: var(--radius-sm);
-    font-weight: 700; font-size: 0.78rem; cursor: pointer; transition: opacity 0.2s;
-    display: inline-flex; align-items: center; gap: 0.4rem;
-  }
-  .btn-action:hover { opacity: 0.9; }
-  .btn-action.secondary {
-    background: rgba(11, 53, 65, 0.7); color: var(--futux-cyan);
-    border: 1px solid var(--card-border);
-  }
-  .btn-action.secondary:hover { background: rgba(11, 53, 65, 0.95); }
+  /* Hero Section */
+  .hero { text-align: left; margin-bottom: 2.25rem; }
+  h1 { font-size: 2.4rem; font-weight: 800; letter-spacing: -0.03em; margin-bottom: 0.4rem; line-height: 1.15; }
+  h1 span.cyan { color: var(--futux-cyan); }
+  h1 span.orange { color: var(--futux-orange); }
+  p.subtitle { color: var(--text-secondary); font-size: 1rem; max-width: 720px; }
 
-  /* Metric Cards */
-  .grid-stats {
-    display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 1rem;
-    margin-bottom: 1.75rem;
-  }
-  .stat-card {
+  .privacy-strip {
+    margin: 1.25rem 0 0;
     background: var(--card-surface); border: 1px solid var(--card-border);
-    border-radius: var(--radius-md); padding: 1.35rem 1.1rem; text-align: center;
-    position: relative; overflow: hidden;
+    border-radius: var(--radius-md); padding: 0.75rem 1.1rem;
+    display: flex; align-items: center; gap: 0.65rem; font-size: 0.82rem; color: var(--text-secondary);
   }
-  .stat-card::before {
-    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
-    background: linear-gradient(90deg, transparent, var(--futux-cyan), transparent);
-    opacity: 0.4;
-  }
-  .stat-title { font-size: 0.72rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.06em; }
-  .stat-val { font-size: 2.6rem; font-weight: 800; font-family: 'JetBrains Mono', monospace; line-height: 1.1; margin: 0.4rem 0; }
-  .stat-val.main { color: var(--futux-cyan); text-shadow: 0 0 20px rgba(15, 191, 241, 0.35); }
-  .stat-sub { font-size: 0.72rem; color: var(--text-muted); }
-  
-  .progress-wrap { width: 100%; height: 5px; background: rgba(255, 255, 255, 0.08); border-radius: 999px; overflow: hidden; margin-top: 0.6rem; }
-  .progress-bar { height: 100%; border-radius: 999px; transition: width 0.6s cubic-bezier(0.16, 1, 0.3, 1); }
+  .privacy-strip strong { color: var(--text-primary); }
 
-  .grade-badge {
-    display: inline-block; padding: 0.22rem 0.75rem; border-radius: 999px;
-    font-size: 0.72rem; font-weight: 800; font-family: 'JetBrains Mono', monospace;
-    letter-spacing: 0.05em;
+  /* Card Component */
+  .card {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: var(--radius-lg);
+    padding: 1.5rem;
+    box-shadow: var(--shadow-card);
+    margin-bottom: 1.5rem;
+    transition: border-color 0.2s ease, background-color 0.2s ease;
   }
-  .grade-A { background: rgba(16, 185, 129, 0.15); color: #34D399; border: 1px solid var(--emerald); }
-  .grade-B { background: rgba(15, 191, 241, 0.15); color: var(--futux-cyan); border: 1px solid var(--futux-cyan); }
-  .grade-C { background: rgba(255, 145, 77, 0.15); color: var(--futux-orange); border: 1px solid var(--futux-orange); }
-  .grade-D, .grade-F { background: rgba(244, 63, 94, 0.15); color: var(--rose); border: 1px solid var(--rose); }
 
-  /* Filter Tabs & Table */
-  .filter-tabs { display: flex; gap: 0.5rem; margin-bottom: 1rem; }
-  .filter-btn {
-    background: transparent; border: 1px solid rgba(255, 255, 255, 0.08);
-    color: var(--text-muted); font-size: 0.72rem; font-weight: 600;
+  /* Upload Dropzone */
+  .dropzone {
+    border: 2px dashed var(--dropzone-border); border-radius: var(--radius-md);
+    padding: 2.25rem 1.5rem; text-align: center; cursor: pointer;
+    background: var(--dropzone-bg); transition: all 0.2s;
+  }
+  .dropzone:hover, .dropzone.dragover {
+    border-color: var(--futux-cyan); background: var(--dropzone-hover);
+  }
+  .upload-icon {
+    width: 40px; height: 40px; margin: 0 auto 0.75rem;
+    border-radius: 50%; background: var(--badge-bg);
+    display: flex; align-items: center; justify-content: center; color: var(--accent-primary);
+  }
+
+  /* Buttons & Controls */
+  .btn {
+    display: inline-flex; align-items: center; gap: 0.4rem;
+    padding: 0.5rem 1rem; border-radius: var(--radius-sm);
+    font-size: 0.8rem; font-weight: 600; cursor: pointer; transition: all 0.2s;
+    font-family: inherit;
+  }
+  .btn-primary {
+    background: var(--accent-primary); color: #FFFFFF; border: none;
+  }
+  .btn-primary:hover { opacity: 0.92; }
+  .btn-secondary {
+    background: var(--card-surface); border: 1px solid var(--card-border);
+    color: var(--text-primary);
+  }
+  .btn-secondary:hover { background: var(--table-row-hover); border-color: var(--card-border-hover); }
+
+  .preset-bar {
+    display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 1rem;
+    margin-top: 1rem; padding-top: 1rem; border-top: 1px solid var(--card-border);
+  }
+  .pill-group { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+  .pill-btn {
+    background: var(--card-surface); border: 1px solid var(--card-border);
+    color: var(--text-secondary); font-size: 0.75rem; font-weight: 600;
     padding: 0.35rem 0.75rem; border-radius: 999px; cursor: pointer; transition: all 0.2s;
   }
-  .filter-btn:hover { color: var(--text-primary); border-color: var(--card-border); }
-  .filter-btn.active { background: rgba(15, 191, 241, 0.15); color: var(--futux-cyan); border-color: var(--futux-cyan); }
+  .pill-btn:hover { color: var(--text-primary); border-color: var(--card-border-hover); }
+  .pill-btn.active {
+    background: var(--badge-bg); color: var(--accent-primary);
+    border-color: var(--accent-primary);
+  }
 
+  /* Metric Cards Grid */
+  .grid-metrics {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 1rem;
+    margin-bottom: 1.5rem;
+  }
+  .metric-card {
+    background: var(--card-surface); border: 1px solid var(--card-border);
+    border-radius: var(--radius-md); padding: 1.25rem 1.1rem; text-align: left;
+  }
+  .metric-label { font-size: 0.72rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.05em; }
+  .metric-num { font-size: 2.25rem; font-weight: 800; font-family: 'JetBrains Mono', monospace; line-height: 1.1; margin: 0.35rem 0; }
+  .metric-num.main { color: var(--accent-primary); }
+  .metric-meta { font-size: 0.75rem; color: var(--text-secondary); }
+
+  .progress-bar-wrap {
+    width: 100%; height: 5px; background: var(--card-border); border-radius: 999px;
+    overflow: hidden; margin-top: 0.5rem;
+  }
+  .progress-bar-fill { height: 100%; border-radius: 999px; transition: width 0.5s ease; }
+
+  /* Grades */
+  .grade-badge {
+    display: inline-block; padding: 0.2rem 0.65rem; border-radius: 999px;
+    font-size: 0.72rem; font-weight: 800; font-family: 'JetBrains Mono', monospace;
+  }
+  .grade-A { background: rgba(16, 185, 129, 0.12); color: #059669; border: 1px solid rgba(16, 185, 129, 0.3); }
+  .grade-B { background: rgba(2, 132, 199, 0.12); color: #0284C7; border: 1px solid rgba(2, 132, 199, 0.3); }
+  .grade-C { background: rgba(234, 88, 12, 0.12); color: #EA580C; border: 1px solid rgba(234, 88, 12, 0.3); }
+  .grade-D, .grade-F { background: rgba(239, 68, 68, 0.12); color: #DC2626; border: 1px solid rgba(239, 68, 68, 0.3); }
+
+  /* Table */
   table { width: 100%; border-collapse: collapse; font-size: 0.78rem; font-family: 'JetBrains Mono', monospace; }
-  th { background: rgba(11, 53, 65, 0.55); text-align: left; padding: 0.75rem 1rem; color: var(--text-secondary); font-size: 0.7rem; text-transform: uppercase; }
-  td { padding: 0.65rem 1rem; border-bottom: 1px solid rgba(255, 255, 255, 0.05); }
-  tr:hover td { background: rgba(15, 191, 241, 0.03); }
+  th { background: var(--table-header); text-align: left; padding: 0.7rem 0.9rem; color: var(--text-secondary); font-size: 0.7rem; text-transform: uppercase; border-bottom: 1px solid var(--table-border); }
+  td { padding: 0.65rem 0.9rem; border-bottom: 1px solid var(--table-border); color: var(--text-primary); }
+  tr:hover td { background: var(--table-row-hover); }
 
-  .dim-tag { display: inline-block; padding: 0.15rem 0.5rem; border-radius: 4px; font-size: 0.68rem; font-weight: 700; text-transform: uppercase; }
-  .dim-completeness { background: rgba(15, 191, 241, 0.18); color: var(--futux-cyan); }
-  .dim-validity { background: rgba(168, 85, 247, 0.2); color: #C084FC; }
-  .dim-uniqueness { background: rgba(255, 145, 77, 0.2); color: var(--futux-orange); }
-  .dim-outliers { background: rgba(244, 63, 94, 0.2); color: #FDA4AF; }
+  .dim-pill {
+    display: inline-block; padding: 0.12rem 0.45rem; border-radius: 4px; font-size: 0.68rem; font-weight: 700; text-transform: uppercase;
+  }
+  .dim-completeness { background: rgba(2, 132, 199, 0.12); color: #0284C7; }
+  .dim-validity { background: rgba(147, 51, 234, 0.12); color: #9333EA; }
+  .dim-uniqueness { background: rgba(234, 88, 12, 0.12); color: #EA580C; }
+  .dim-outliers { background: rgba(239, 68, 68, 0.12); color: #EF4444; }
+
+  .schema-tags { display: flex; flex-wrap: wrap; gap: 0.35rem; margin-top: 0.65rem; }
+  .schema-tag {
+    font-size: 0.7rem; font-family: 'JetBrains Mono', monospace;
+    background: var(--card-surface); border: 1px solid var(--card-border);
+    padding: 0.15rem 0.45rem; border-radius: 4px; color: var(--text-secondary);
+  }
 
   footer { text-align: center; color: var(--text-muted); font-size: 0.8rem; margin-top: 3.5rem; }
-  footer a { color: var(--futux-cyan); text-decoration: none; }
+  footer a { color: var(--accent-primary); text-decoration: none; }
 </style>
 </head>
 <body>
 <div class="container">
-  <header>
-    <div class="brand-pill">
-      <span class="brand-dot"></span>
-      FutuX Agri-consult &bull; Open-Source DPI Middleware
+  <div class="top-nav">
+    <div class="brand-group">
+      <div class="brand-logo-mark">FX</div>
+      <div>
+        <span class="brand-name">FutuX Agri-consult</span>
+        <span class="brand-tag">DPI Middleware</span>
+      </div>
     </div>
+    <button class="theme-toggle" id="theme-btn" onclick="toggleTheme()">
+      <span id="theme-icon">🌙</span>
+      <span id="theme-label">Dark Mode</span>
+    </button>
+  </div>
+
+  <div class="hero">
     <h1>Open-DQI <span class="cyan">Audit</span> <span class="orange">Playground</span></h1>
-    <p class="subtitle">Deterministic Data Quality Index calculation across Completeness, Validity, Uniqueness, and Outlier IQR bounds with 100% in-browser evaluation.</p>
+    <p class="subtitle">Deterministic, in-browser Data Quality Index evaluation. Upload any CSV tabular dataset to inspect Completeness, Validity, Uniqueness, and Outlier fences with zero server egress.</p>
     
     <div class="privacy-strip">
-      <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-      <div><strong>Complete Privacy Guarantee:</strong> Your dataset never touches a remote server. All CSV parsing, statistical hashing, and DQI weighted scoring execute locally on your client machine.</div>
+      <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+      <div><strong>Complete Privacy Guarantee:</strong> 100% Client-side. Your dataset never leaves your browser. All statistical checks execute locally on your CPU.</div>
     </div>
-  </header>
+  </div>
 
-  <div class="glass-card">
-    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.25rem;">
+  <div class="card">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.25rem; flex-wrap: wrap; gap: 0.75rem;">
       <div>
-        <h2 style="font-size: 1.15rem; font-weight: 700;">Upload Dataset or Audit Synthetic Fixtures</h2>
-        <p style="font-size: 0.8rem; color: var(--text-secondary);">Drop any CSV file to calculate real-time weighted DQI scores and inspect row-level defects.</p>
+        <h2 style="font-size: 1.15rem; font-weight: 700;">Upload Tabular CSV or Audit Pre-loaded Benchmarks</h2>
+        <p style="font-size: 0.8rem; color: var(--text-secondary);">Works with any tabular schema (agriculture, credit scoring, voters, sales, logistics).</p>
       </div>
       <div style="display: flex; gap: 0.5rem;">
-        <button class="btn-action secondary" onclick="exportReportJSON()">
+        <button class="btn btn-secondary" onclick="exportReportJSON()">
           <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M17 8l-5-5-5 5M12 3v12"/></svg>
           Export JSON
         </button>
-        <button class="btn-action" onclick="document.getElementById('csv-file-input').click()">
+        <button class="btn btn-primary" onclick="document.getElementById('csv-file-input').click()">
           <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 4v16m8-8H4"/></svg>
           Upload CSV
         </button>
@@ -221,72 +292,79 @@
 
     <div class="dropzone" id="dropzone" onclick="document.getElementById('csv-file-input').click()">
       <div class="upload-icon">
-        <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M17 8l-5-5-5 5M12 3v12"/></svg>
+        <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M17 8l-5-5-5 5M12 3v12"/></svg>
       </div>
-      <div style="font-weight: 700; font-size: 0.95rem; margin-bottom: 0.25rem;">Click to upload or drag &amp; drop any CSV dataset</div>
-      <div style="font-size: 0.78rem; color: var(--text-muted);">Parses columns, checks missing values, detects coordinate/phone anomalies, and calculates IQR outliers</div>
+      <div style="font-weight: 700; font-size: 0.95rem; margin-bottom: 0.2rem;">Click to upload or drag &amp; drop ANY tabular CSV file</div>
+      <div style="font-size: 0.78rem; color: var(--text-muted);">Auto-detects data types, checks missing values, validates formatting, and detects Tukey IQR anomalies</div>
       <input type="file" id="csv-file-input" accept=".csv" style="display: none;" onchange="handleFileUpload(event)">
     </div>
 
-    <div class="controls-bar">
+    <div class="preset-bar">
       <div>
-        <span style="font-size: 0.72rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase; margin-right: 0.75rem;">Preset Fixtures:</span>
-        <div class="dataset-btn-group" style="display: inline-flex;">
-          <button class="btn-sample active" id="btn-agri" onclick="loadSample('agriculture')">Agriculture Clean (200 rows)</button>
-          <button class="btn-sample" id="btn-voter" onclick="loadSample('voter')">Civil Registry (200 rows)</button>
-          <button class="btn-sample" id="btn-credit" onclick="loadSample('credit')">Credit Applicants (200 rows)</button>
+        <span style="font-size: 0.72rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase; margin-right: 0.6rem;">Benchmarks:</span>
+        <div class="pill-group" style="display: inline-flex;">
+          <button class="pill-btn active" id="btn-agri" onclick="loadSample('agriculture')">Agriculture Clean (200 rows)</button>
+          <button class="pill-btn" id="btn-voter" onclick="loadSample('voter')">Civil Registry (200 rows)</button>
+          <button class="pill-btn" id="btn-credit" onclick="loadSample('credit')">Credit Applicants (200 rows)</button>
         </div>
       </div>
       <div id="file-info" style="font-size: 0.75rem; color: var(--text-muted); font-family: 'JetBrains Mono', monospace;">
         Source: synthetic_clean_agri.csv
       </div>
     </div>
+
+    <div id="schema-panel" style="display: none; margin-top: 1rem; padding-top: 1rem; border-top: 1px solid var(--card-border);">
+      <div style="font-size: 0.72rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase;">Detected Schema:</div>
+      <div class="schema-tags" id="schema-tags-list"></div>
+    </div>
   </div>
 
-  <div class="grid-stats">
-    <div class="stat-card">
-      <div class="stat-title">Overall DQI Score</div>
-      <div class="stat-val main" id="stat-dqi">100.00</div>
+  <!-- Metric Overview -->
+  <div class="grid-metrics">
+    <div class="metric-card">
+      <div class="metric-label">Composite DQI Score</div>
+      <div class="metric-num main" id="stat-dqi">100.00</div>
       <span class="grade-badge grade-A" id="stat-grade">GRADE A</span>
     </div>
-    <div class="stat-card">
-      <div class="stat-title">Completeness (25%)</div>
-      <div class="stat-val" style="color: var(--futux-cyan);" id="stat-c">100.0%</div>
-      <div class="progress-wrap"><div class="progress-bar" id="bar-c" style="width: 100%; background: var(--futux-cyan);"></div></div>
-      <div class="stat-sub" id="sub-c" style="margin-top: 0.4rem;">0 missing cells</div>
+    <div class="metric-card">
+      <div class="metric-label">Completeness (25%)</div>
+      <div class="metric-num" style="color: var(--accent-primary);" id="stat-c">100.0%</div>
+      <div class="progress-bar-wrap"><div class="progress-bar-fill" id="bar-c" style="width: 100%; background: var(--accent-primary);"></div></div>
+      <div class="metric-meta" id="sub-c" style="margin-top: 0.4rem;">0 missing cells</div>
     </div>
-    <div class="stat-card">
-      <div class="stat-title">Validity (35%)</div>
-      <div class="stat-val" style="color: #C084FC;" id="stat-v">100.0%</div>
-      <div class="progress-wrap"><div class="progress-bar" id="bar-v" style="width: 100%; background: #A855F7;"></div></div>
-      <div class="stat-sub" id="sub-v" style="margin-top: 0.4rem;">0 format anomalies</div>
+    <div class="metric-card">
+      <div class="metric-label">Validity (35%)</div>
+      <div class="metric-num" style="color: #9333EA;" id="stat-v">100.0%</div>
+      <div class="progress-bar-wrap"><div class="progress-bar-fill" id="bar-v" style="width: 100%; background: #9333EA;"></div></div>
+      <div class="metric-meta" id="sub-v" style="margin-top: 0.4rem;">0 format defects</div>
     </div>
-    <div class="stat-card">
-      <div class="stat-title">Uniqueness (25%)</div>
-      <div class="stat-val" style="color: var(--futux-orange);" id="stat-u">100.0%</div>
-      <div class="progress-wrap"><div class="progress-bar" id="bar-u" style="width: 100%; background: var(--futux-orange);"></div></div>
-      <div class="stat-sub" id="sub-u" style="margin-top: 0.4rem;">0 duplicate keys</div>
+    <div class="metric-card">
+      <div class="metric-label">Uniqueness (25%)</div>
+      <div class="metric-num" style="color: var(--futux-orange);" id="stat-u">100.0%</div>
+      <div class="progress-bar-wrap"><div class="progress-bar-fill" id="bar-u" style="width: 100%; background: var(--futux-orange);"></div></div>
+      <div class="metric-meta" id="sub-u" style="margin-top: 0.4rem;">0 duplicate keys</div>
     </div>
-    <div class="stat-card">
-      <div class="stat-title">Outliers (15%)</div>
-      <div class="stat-val" style="color: #FDA4AF;" id="stat-o">100.0%</div>
-      <div class="progress-wrap"><div class="progress-bar" id="bar-o" style="width: 100%; background: var(--rose);"></div></div>
-      <div class="stat-sub" id="sub-o" style="margin-top: 0.4rem;">0 IQR violations</div>
+    <div class="metric-card">
+      <div class="metric-label">Outliers (15%)</div>
+      <div class="metric-num" style="color: var(--rose);" id="stat-o">100.0%</div>
+      <div class="progress-bar-wrap"><div class="progress-bar-fill" id="bar-o" style="width: 100%; background: var(--rose);"></div></div>
+      <div class="metric-meta" id="sub-o" style="margin-top: 0.4rem;">0 IQR anomalies</div>
     </div>
   </div>
 
-  <div class="glass-card">
+  <!-- Detailed Audit Table -->
+  <div class="card">
     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; flex-wrap: wrap; gap: 0.5rem;">
       <div>
-        <h3 style="font-size: 1.1rem; font-weight: 700;">Audit Issue Inspector (<span id="issues-count">0</span> defects flagged)</h3>
+        <h3 style="font-size: 1.05rem; font-weight: 700;">Audit Issue Inspector (<span id="issues-count">0</span> defects flagged)</h3>
         <p style="font-size: 0.75rem; color: var(--text-secondary);" id="meta-records">200 evaluated records</p>
       </div>
-      <div class="filter-tabs">
-        <button class="filter-btn active" onclick="filterIssues('all', this)">All Issues</button>
-        <button class="filter-btn" onclick="filterIssues('completeness', this)">Completeness</button>
-        <button class="filter-btn" onclick="filterIssues('validity', this)">Validity</button>
-        <button class="filter-btn" onclick="filterIssues('uniqueness', this)">Uniqueness</button>
-        <button class="filter-btn" onclick="filterIssues('outliers', this)">Outliers</button>
+      <div class="pill-group">
+        <button class="pill-btn active" onclick="filterIssues('all', this)">All Issues</button>
+        <button class="pill-btn" onclick="filterIssues('completeness', this)">Completeness</button>
+        <button class="pill-btn" onclick="filterIssues('validity', this)">Validity</button>
+        <button class="pill-btn" onclick="filterIssues('uniqueness', this)">Uniqueness</button>
+        <button class="pill-btn" onclick="filterIssues('outliers', this)">Outliers</button>
       </div>
     </div>
     <div style="max-height: 420px; overflow-y: auto;">
@@ -301,7 +379,7 @@
           </tr>
         </thead>
         <tbody id="issues-body">
-          <tr><td colspan="5" style="text-align: center; color: var(--emerald); padding: 2rem;">No defects found. High quality baseline!</td></tr>
+          <tr><td colspan="5" style="text-align: center; color: var(--emerald); padding: 2.5rem;">No defects found. High quality baseline!</td></tr>
         </tbody>
       </table>
     </div>
@@ -314,10 +392,43 @@
 </div>
 
 <script>
+// --- Theme Switcher ---
+function initTheme() {
+  const saved = localStorage.getItem("futux-theme");
+  if (saved) {
+    setTheme(saved);
+  } else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+    setTheme("dark");
+  } else {
+    setTheme("light");
+  }
+}
+
+function setTheme(theme) {
+  document.documentElement.setAttribute("data-theme", theme);
+  localStorage.setItem("futux-theme", theme);
+  const icon = document.getElementById("theme-icon");
+  const label = document.getElementById("theme-label");
+  if (theme === "dark") {
+    icon.innerText = "☀️";
+    label.innerText = "Light Mode";
+  } else {
+    icon.innerText = "🌙";
+    label.innerText = "Dark Mode";
+  }
+}
+
+function toggleTheme() {
+  const current = document.documentElement.getAttribute("data-theme");
+  setTheme(current === "dark" ? "light" : "dark");
+}
+
+initTheme();
+
+// --- Audit Logic ---
 let currentAuditResult = { dqi: 100, grade: "A", c: 100, v: 100, u: 100, o: 100, records: 200, issues: [] };
 let activeFilter = 'all';
 
-// Preset samples
 const SAMPLES = {
   agriculture: {
     dqi: 100.00, grade: "A", c: 100.0, v: 100.0, u: 100.0, o: 100.0, records: 200,
@@ -381,14 +492,14 @@ function renderIssuesTable() {
     : currentAuditResult.issues.filter(it => it.dim === activeFilter);
 
   if (filtered.length === 0) {
-    tbody.innerHTML = '<tr><td colspan="5" style="text-align: center; color: var(--emerald); padding: 2.5rem;">No defects found for the current selection. Pass!</td></tr>';
+    tbody.innerHTML = '<tr><td colspan="5" style="text-align: center; color: var(--emerald); padding: 2.5rem;">No defects found for the selected filter. Pass!</td></tr>';
   } else {
     tbody.innerHTML = filtered.map((it, idx) => `
       <tr>
         <td>${idx + 1}</td>
         <td>Row #${it.row}</td>
         <td><code>${it.field}</code></td>
-        <td><span class="dim-tag dim-${it.dim}">${it.dim}</span></td>
+        <td><span class="dim-pill dim-${it.dim}">${it.dim}</span></td>
         <td>${it.reason}</td>
       </tr>
     `).join("");
@@ -397,15 +508,21 @@ function renderIssuesTable() {
 
 function filterIssues(dim, btn) {
   activeFilter = dim;
-  document.querySelectorAll(".filter-btn").forEach(b => b.classList.remove("active"));
-  btn.classList.add("active");
+  document.querySelectorAll(".pill-btn").forEach(b => {
+    if (b.innerText.toLowerCase().includes(dim) || (dim === 'all' && b.innerText === 'All Issues')) {
+      b.classList.add("active");
+    } else if (['Completeness','Validity','Uniqueness','Outliers','All Issues'].includes(b.innerText)) {
+      b.classList.remove("active");
+    }
+  });
   renderIssuesTable();
 }
 
 function loadSample(key) {
-  document.querySelectorAll(".dataset-btn-group .btn-sample").forEach(b => b.classList.remove("active"));
+  document.querySelectorAll(".preset-bar .pill-btn").forEach(b => b.classList.remove("active"));
   const btn = document.getElementById("btn-" + key);
   if (btn) btn.classList.add("active");
+  document.getElementById("schema-panel").style.display = "none";
   renderUI(SAMPLES[key]);
 }
 
@@ -429,37 +546,65 @@ function handleFileUpload(e) {
   parseClientCSV(file);
 }
 
-// Comprehensive In-Browser DQI Engine
+// Universal Tabular CSV Audit Engine
 function parseClientCSV(file) {
   Papa.parse(file, {
     header: true,
     skipEmptyLines: true,
+    dynamicTyping: false,
     complete: function(results) {
       if (!results.data || results.data.length === 0) {
         alert("The uploaded CSV file is empty.");
         return;
       }
-      auditCSVData(results.data, file.name);
+      auditUniversalTabularData(results.data, file.name);
     }
   });
 }
 
-function auditCSVData(rows, filename) {
+function auditUniversalTabularData(rows, filename) {
   const totalRows = rows.length;
   const cols = Object.keys(rows[0] || {});
   const totalCells = totalRows * cols.length;
   
+  // 0. SCHEMA PROFILER
+  const schemaList = [];
+  const colTypes = {};
+  cols.forEach(c => {
+    let numCount = 0, dateCount = 0, boolCount = 0;
+    rows.slice(0, 100).forEach(r => {
+      const v = String(r[c] || "").trim();
+      if (v !== "") {
+        if (!isNaN(Number(v))) numCount++;
+        else if (/^\d{4}-\d{2}-\d{2}/.test(v) || !isNaN(Date.parse(v))) dateCount++;
+        else if (/^(true|false|0|1|yes|no)$/i.test(v)) boolCount++;
+      }
+    });
+    const sampleSize = Math.min(100, totalRows);
+    let type = "String";
+    if (numCount / sampleSize > 0.7) type = "Numeric";
+    else if (dateCount / sampleSize > 0.7) type = "Date";
+    else if (boolCount / sampleSize > 0.7) type = "Boolean";
+    colTypes[c] = type;
+    schemaList.push(`${c}: ${type}`);
+  });
+
+  const schemaPanel = document.getElementById("schema-panel");
+  const schemaTags = document.getElementById("schema-tags-list");
+  schemaTags.innerHTML = schemaList.map(s => `<span class="schema-tag">${s}</span>`).join("");
+  schemaPanel.style.display = "block";
+
   let emptyCells = 0;
   const issues = [];
   
-  // 1. COMPLETENESS CHECK
+  // 1. COMPLETENESS CHECK (Null, empty, NaN, None across all fields)
   cols.forEach(col => {
     rows.forEach((r, idx) => {
       const val = r[col];
-      if (val === undefined || val === null || String(val).trim() === "") {
+      if (val === undefined || val === null || String(val).trim() === "" || /^(null|none|n\/a|nan|-)$/i.test(String(val).trim())) {
         emptyCells++;
         if (issues.length < 50) {
-          issues.push({ row: idx + 1, field: col, dim: "completeness", reason: "missing_or_empty_value" });
+          issues.push({ row: idx + 1, field: col, dim: "completeness", reason: "missing_or_placeholder_value" });
         }
       }
     });
@@ -475,6 +620,7 @@ function auditCSVData(rows, filename) {
   const lonCols = cols.filter(c => /lon|longitude|lng/i.test(c));
 
   rows.forEach((r, idx) => {
+    // Standard phone validation
     phoneCols.forEach(col => {
       const v = String(r[col] || "").trim();
       if (v && !/^\+?[0-9]{7,15}$/.test(v.replace(/[\s-]/g, ''))) {
@@ -482,6 +628,7 @@ function auditCSVData(rows, filename) {
         if (issues.length < 80) issues.push({ row: idx + 1, field: col, dim: "validity", reason: `invalid_phone_format_${v}` });
       }
     });
+    // Email validation
     emailCols.forEach(col => {
       const v = String(r[col] || "").trim();
       if (v && !emailRegex.test(v)) {
@@ -489,68 +636,89 @@ function auditCSVData(rows, filename) {
         if (issues.length < 80) issues.push({ row: idx + 1, field: col, dim: "validity", reason: `invalid_email_syntax_${v}` });
       }
     });
+    // Coordinates validation
     latCols.forEach(col => {
       const v = parseFloat(r[col]);
       if (!isNaN(v) && (v < -90 || v > 90)) {
         invalidCount++;
-        if (issues.length < 80) issues.push({ row: idx + 1, field: col, dim: "validity", reason: `latitude_out_of_range_[${v}]` });
+        if (issues.length < 80) issues.push({ row: idx + 1, field: col, dim: "validity", reason: `latitude_out_of_bounds_[${v}]` });
       }
     });
     lonCols.forEach(col => {
       const v = parseFloat(r[col]);
       if (!isNaN(v) && (v < -180 || v > 180)) {
         invalidCount++;
-        if (issues.length < 80) issues.push({ row: idx + 1, field: col, dim: "validity", reason: `longitude_out_of_range_[${v}]` });
+        if (issues.length < 80) issues.push({ row: idx + 1, field: col, dim: "validity", reason: `longitude_out_of_bounds_[${v}]` });
+      }
+    });
+    // Numeric type purity for columns detected as Numeric
+    cols.forEach(col => {
+      if (colTypes[col] === "Numeric") {
+        const v = String(r[col] || "").trim();
+        if (v !== "" && isNaN(Number(v))) {
+          invalidCount++;
+          if (issues.length < 80) issues.push({ row: idx + 1, field: col, dim: "validity", reason: `non_numeric_in_numeric_col_[${v}]` });
+        }
       }
     });
   });
   const validityScore = Math.max(0, 100 - (invalidCount / Math.max(1, totalRows)) * 100);
 
-  // 3. UNIQUENESS CHECK
-  const idCol = cols.find(c => /id|nin|code|bvn|uuid/i.test(c)) || cols[0];
-  const seenIds = new Set();
+  // 3. UNIQUENESS CHECK (ID key collision or full row duplicate)
+  const idCol = cols.find(c => /id|nin|code|bvn|uuid|key/i.test(c));
+  const seenKeys = new Set();
   let duplicateCount = 0;
   rows.forEach((r, idx) => {
-    const key = String(r[idCol] || "").trim();
+    // If ID exists, check ID. Else check hash of all fields.
+    const key = idCol ? String(r[idCol] || "").trim() : JSON.stringify(r);
     if (key) {
-      if (seenIds.has(key)) {
+      if (seenKeys.has(key)) {
         duplicateCount++;
-        if (issues.length < 100) issues.push({ row: idx + 1, field: idCol, dim: "uniqueness", reason: `exact_duplicate_key_${key}` });
+        if (issues.length < 100) {
+          issues.push({ 
+            row: idx + 1, 
+            field: idCol || "row_identity", 
+            dim: "uniqueness", 
+            reason: idCol ? `duplicate_primary_key_${key}` : `duplicate_row_tuple` 
+          });
+        }
       } else {
-        seenIds.add(key);
+        seenKeys.add(key);
       }
     }
   });
   const uniquenessScore = Math.max(0, 100 - (duplicateCount / Math.max(1, totalRows)) * 100);
 
-  // 4. OUTLIER DETECTION (IQR Tukey fences on numeric columns)
+  // 4. OUTLIER DETECTION (Tukey IQR fences across all numeric columns)
   let outlierCount = 0;
   cols.forEach(col => {
-    const numericVals = rows
-      .map((r, idx) => ({ val: parseFloat(r[col]), row: idx + 1 }))
-      .filter(item => !isNaN(item.val))
-      .sort((a, b) => a.val - b.val);
+    if (colTypes[col] === "Numeric" && !/id|phone|year|zip|code/i.test(col)) {
+      const numericVals = rows
+        .map((r, idx) => ({ val: parseFloat(r[col]), row: idx + 1 }))
+        .filter(item => !isNaN(item.val))
+        .sort((a, b) => a.val - b.val);
 
-    if (numericVals.length >= 8 && !/id|phone|year|zip|code/i.test(col)) {
-      const q1 = numericVals[Math.floor(numericVals.length * 0.25)].val;
-      const q3 = numericVals[Math.floor(numericVals.length * 0.75)].val;
-      const iqr = q3 - q1;
-      const lower = q1 - 1.5 * iqr;
-      const upper = q3 + 1.5 * iqr;
+      if (numericVals.length >= 8) {
+        const q1 = numericVals[Math.floor(numericVals.length * 0.25)].val;
+        const q3 = numericVals[Math.floor(numericVals.length * 0.75)].val;
+        const iqr = q3 - q1;
+        const lower = q1 - 1.5 * iqr;
+        const upper = q3 + 1.5 * iqr;
 
-      numericVals.forEach(item => {
-        if (item.val < lower || item.val > upper) {
-          outlierCount++;
-          if (issues.length < 120) {
-            issues.push({ row: item.row, field: col, dim: "outliers", reason: `iqr_outlier_value_[${item.val}]` });
+        numericVals.forEach(item => {
+          if (item.val < lower || item.val > upper) {
+            outlierCount++;
+            if (issues.length < 120) {
+              issues.push({ row: item.row, field: col, dim: "outliers", reason: `iqr_outlier_value_[${item.val}]_bounds[${lower.toFixed(1)},${upper.toFixed(1)}]` });
+            }
           }
-        }
-      });
+        });
+      }
     }
   });
   const outlierScore = Math.max(0, 100 - (outlierCount / Math.max(1, totalRows)) * 100);
 
-  // Weighted DQI Formula: 0.25*C + 0.35*V + 0.25*U + 0.15*O
+  // Weighted DQI Formula
   const finalDQI = (0.25 * completenessScore) + (0.35 * validityScore) + (0.25 * uniquenessScore) + (0.15 * outlierScore);
   
   let grade = "A";
@@ -559,7 +727,7 @@ function auditCSVData(rows, filename) {
   else if (finalDQI < 80) grade = "C";
   else if (finalDQI < 90) grade = "B";
 
-  document.querySelectorAll(".dataset-btn-group .btn-sample").forEach(b => b.classList.remove("active"));
+  document.querySelectorAll(".preset-bar .pill-btn").forEach(b => b.classList.remove("active"));
 
   renderUI({
     dqi: finalDQI,
