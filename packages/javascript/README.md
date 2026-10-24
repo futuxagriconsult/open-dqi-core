@@ -1,59 +1,78 @@
-# @futux/dqi
+# @futux/dqi (Data Quality Index for JavaScript & TypeScript)
 
-[![npm version](https://img.shields.io/npm/v/@futux/dqi.svg?color=0B3541)](https://www.npmjs.com/package/@futux/dqi)
-[![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
-[![Playground](https://img.shields.io/badge/Live_Playground-GitHub_Pages-brightgreen.svg)](https://futuxagriconsult.github.io/open-dqi-core/)
+[![npm version](https://img.shields.io/npm/v/@futux/dqi.svg?color=0B3541&logo=npm&logoColor=white)](https://www.npmjs.com/package/@futux/dqi)
+[![npm downloads](https://img.shields.io/npm/dm/@futux/dqi.svg)](https://www.npmjs.com/package/@futux/dqi)
+[![License: Apache 2.0](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
+[![Live Web Demo](https://img.shields.io/badge/Interactive_Playground-Live_Online-0FBFF1?style=flat&logo=google-chrome&logoColor=white)](https://futuxagriconsult.github.io/open-dqi-core/)
 
-A schema-agnostic Data Quality Index (DQI) library for Node.js and modern browser environments. Evaluates any tabular dataset (CSV, JSON, or record objects) across four weighted dimensions: **Completeness**, **Validity**, **Uniqueness**, and **Outliers**.
-
-Developed by **FutuX Agri-consult Limited** for Digital Public Infrastructure (DPI) registries and open data governance.
+> **Lightweight, schema-agnostic Data Quality Index (DQI) library for Node.js, Next.js, and modern browser runtimes.** Score any tabular dataset (CSV, JSON, array of objects) across four weighted dimensions: **Completeness**, **Validity**, **Uniqueness**, and **Outliers** in milliseconds.
 
 ---
 
-## Installation
+### 🌐 Try the Interactive Web Playground
+
+Test `@futux/dqi` directly in your browser:  
+👉 **[Launch Live Web Demo (https://futuxagriconsult.github.io/open-dqi-core/)](https://futuxagriconsult.github.io/open-dqi-core/)**
+
+---
+
+## 🚀 Key Highlights
+
+- **Zero-Config Auto-Inference:** Evaluates arbitrary JSON/CSV records out-of-the-box without requiring predefined schemas.
+- **Universal Single Metric:** Outputs an intuitive 0–100 score and academic letter grade (A–F) for easy communication with non-technical stakeholders.
+- **Client & Server Ready:** Runs natively in Node.js, Bun, Deno, Web Workers, and modern browser single-page applications.
+- **Pure JavaScript / Zero Heavy Native Addons:** Extremely small bundle footprint, ultra-fast cold start.
+- **Auditable Defect Breakdown:** Pinpoints exact row numbers, defect types, and violating values for instant remediation.
+
+---
+
+## 📦 Installation
 
 ```bash
+# npm
 npm install @futux/dqi
-```
 
-Or with Yarn / pnpm:
-
-```bash
+# yarn
 yarn add @futux/dqi
-# or
+
+# pnpm
 pnpm add @futux/dqi
 ```
 
 ---
 
-## Quickstart (Node.js & Browser)
+## 💡 Quick Start
 
-### 1. Zero-Config Evaluation (Auto-Inferred Schema)
+### 1. Zero-Config Evaluation
 
-Evaluate raw tabular records without writing any schema:
+Pass any array of tabular objects. `@futux/dqi` automatically infers data types, detects sentinel nulls, checks formats, and flags anomalies:
 
 ```typescript
 import { DQIEngine } from "@futux/dqi";
 
-const records = [
-  { id: "REC-001", name: "Ibrahim Musa", phone: "+254712345678", yield: 45.2 },
-  { id: "REC-002", name: "Sarah Cherono", phone: "+254787654321", yield: 38.0 },
-  { id: "REC-003", name: "", phone: "invalid", yield: 999.0 }
+const dataset = [
+  { id: "REC-101", name: "Ibrahim Musa", phone: "+254712345678", yield_kg: 42.5 },
+  { id: "REC-102", name: "Sarah Cherono", phone: "+254787654321", yield_kg: 38.0 },
+  { id: "REC-103", name: "N/A", phone: "invalid-phone", yield_kg: 9999.0 },
+  { id: "REC-101", name: "Ibrahim Musa", phone: "+254712345678", yield_kg: 42.5 } // Duplicate
 ];
 
 const engine = new DQIEngine();
-const report = engine.evaluate(records);
+const report = engine.evaluate(dataset);
 
 console.log(`Overall DQI: ${report.overall.toFixed(2)}/100 (Grade: ${report.grade})`);
-console.log(`Completeness: ${report.dimensions.completeness.score.toFixed(1)}`);
-console.log(`Validity:     ${report.dimensions.validity.score.toFixed(1)}`);
-console.log(`Uniqueness:   ${report.dimensions.uniqueness.score.toFixed(1)}`);
-console.log(`Outliers:     ${report.dimensions.outliers.score.toFixed(1)}`);
+console.log(`- Completeness: ${report.dimensions.completeness.score.toFixed(1)}%`);
+console.log(`- Validity:     ${report.dimensions.validity.score.toFixed(1)}%`);
+console.log(`- Uniqueness:   ${report.dimensions.uniqueness.score.toFixed(1)}%`);
+console.log(`- Outliers:     ${report.dimensions.outliers.score.toFixed(1)}%`);
+
+// List flagged defects
+console.log("Flagged Defects:", report.defects);
 ```
 
-### 2. Custom Schema Definition
+### 2. Custom Schema & Dimension Weights
 
-Define domain-specific validation rules and dimension weights:
+Configure custom validation rules and weighting:
 
 ```typescript
 import { DQIEngine, Schema } from "@futux/dqi";
@@ -63,39 +82,42 @@ const schema = new Schema({
   weights: {
     completeness: 0.35,
     validity: 0.35,
-    uniqueness: 0.20,
-    outliers: 0.10
+    uniqueness: 0.15,
+    outliers: 0.15
   },
   fields: {
-    national_id: { type: "id", required: true, unique: true },
-    full_name: { type: "text", required: true },
-    phone_number: { type: "phone", required: true },
-    planted_hectares: { type: "numeric", min: 0.1, max: 50.0 }
+    id: { type: "id", required: true, unique: true },
+    name: { type: "text", required: true },
+    phone: { type: "phone", required: true },
+    yield_kg: { type: "numeric", min: 1.0, max: 500.0 }
   }
 });
 
 const engine = new DQIEngine(schema);
-const report = engine.evaluate(records);
+const report = engine.evaluate(dataset);
 ```
 
 ---
 
-## Four DQI Dimensions
+## 🔬 Four Quality Dimensions
 
-1. **Completeness (Default weight: 0.35)**: Detects missing, null, empty, whitespace-only, and sentinel placeholder values (`N/A`, `NULL`, `none`, `-`).
-2. **Validity (Default weight: 0.35)**: Audits format compliance for national IDs, E.164 phone numbers, ISO dates, GPS coordinates, and allowed regex/enums.
-3. **Uniqueness (Default weight: 0.15)**: Identifies exact duplicate rows and fuzzy duplicate entities (e.g. phonetic/spelling variations).
-4. **Outlier Detection (Default weight: 0.15)**: Flags extreme anomalies using Interquartile Range (IQR) and Modified Z-Score methods.
-
----
-
-## Interactive Playground
-
-Test the engine in your browser with zero installation:
-[https://futuxagriconsult.github.io/open-dqi-core/](https://futuxagriconsult.github.io/open-dqi-core/)
+1. **Completeness (35% default):** Measures missing, null, empty, whitespace-only, and sentinel placeholder strings (`N/A`, `NULL`, `none`, `-`, `?`).
+2. **Validity (35% default):** Audits regex conformance, ISO-8601 dates, E.164 phone formats, GPS coordinate boundaries, and enum lists.
+3. **Uniqueness (15% default):** Identifies exact duplicate rows and primary key collisions.
+4. **Outlier Detection (15% default):** Detects statistical extreme anomalies using Interquartile Range ($1.5 \times \text{IQR}$).
 
 ---
 
-## License
+## 🌐 Also Available in Python
 
-Apache-2.0. Maintained by **FutuX Agri-consult Limited** ([info@futuxconsult.com](mailto:info@futuxconsult.com)).
+For Python data pipelines and pandas integration, install the companion package:
+```bash
+pip install open-dqi-core
+```
+See [GitHub Repository](https://github.com/futuxagriconsult/open-dqi-core) for Python CLI and offline HTML reporting details.
+
+---
+
+## 📄 License
+
+Apache-2.0. Developed and maintained by **FutuX Agri-consult Limited** ([info@futuxconsult.com](mailto:info@futuxconsult.com)).

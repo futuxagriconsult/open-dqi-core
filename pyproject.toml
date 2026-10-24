@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "open-dqi-core"
-version = "0.1.0"
+version = "0.1.1"
 description = "Schema-agnostic Data Quality Index middleware for any tabular dataset"
 readme = "README.md"
 license = { text = "Apache-2.0" }
