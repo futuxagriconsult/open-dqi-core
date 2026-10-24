@@ -41,6 +41,3 @@ dev = ["pytest>=8.0", "pytest-cov", "faker>=24.0", "ruff"]
 
 [tool.hatch.build.targets.wheel]
 packages = ["dqi"]
-
-[tool.hatch.build.targets.wheel.force-include]
-"dqi/schemas" = "dqi/schemas"
