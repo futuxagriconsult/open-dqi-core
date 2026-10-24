@@ -3,146 +3,243 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Open-DQI Live Interactive Playground</title>
+<title>Open-DQI | Enterprise Data Quality Index Middleware Playground</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
 <style>
   :root {
-    --bg: #090d16;
-    --card-bg: rgba(17, 24, 39, 0.7);
-    --card-border: rgba(255, 255, 255, 0.08);
-    --text: #f1f5f9;
-    --text-muted: #94a3b8;
-    --accent: #10b981;
-    --accent-glow: rgba(16, 185, 129, 0.25);
-    --blue: #3b82f6;
-    --purple: #8b5cf6;
-    --amber: #f59e0b;
-    --red: #ef4444;
+    --futux-petrol: #0B3541;
+    --futux-cyan: #0FBFF1;
+    --futux-orange: #FF914D;
+    --bg-dark: #050B12;
+    --card-bg: rgba(11, 53, 65, 0.25);
+    --card-surface: rgba(7, 23, 31, 0.7);
+    --card-border: rgba(15, 191, 241, 0.16);
+    --card-border-glow: rgba(15, 191, 241, 0.42);
+    --text-primary: #F8FAFC;
+    --text-secondary: #94A3B8;
+    --text-muted: #64748B;
+    --emerald: #10B981;
+    --emerald-glow: rgba(16, 185, 129, 0.25);
+    --amber: #FF914D;
+    --rose: #F43F5E;
+    --radius-sm: 8px;
+    --radius-md: 14px;
+    --radius-lg: 20px;
   }
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
   body {
     font-family: 'Plus Jakarta Sans', -apple-system, sans-serif;
-    background: radial-gradient(circle at 50% 0%, #1e293b 0%, var(--bg) 70%);
-    color: var(--text);
+    background-color: var(--bg-dark);
+    background-image: 
+      radial-gradient(at 0% 0%, rgba(15, 191, 241, 0.14) 0px, transparent 55%),
+      radial-gradient(at 100% 0%, rgba(255, 145, 77, 0.09) 0px, transparent 50%),
+      radial-gradient(at 50% 100%, rgba(11, 53, 65, 0.45) 0px, transparent 65%);
+    color: var(--text-primary);
     min-height: 100vh;
-    padding: 2rem 1rem;
+    padding: 2.5rem 1.25rem;
     line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
   }
   .container { max-width: 1200px; margin: 0 auto; }
-  header { text-align: center; margin-bottom: 2.5rem; }
-  .badge {
-    display: inline-flex; align-items: center; gap: 0.4rem;
-    padding: 0.35rem 0.85rem; border-radius: 999px;
-    background: rgba(16, 185, 129, 0.12); color: var(--accent);
-    border: 1px solid rgba(16, 185, 129, 0.3); font-size: 0.75rem;
-    font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em;
-    margin-bottom: 0.75rem;
-  }
-  h1 { font-size: 2.5rem; font-weight: 800; letter-spacing: -0.02em; margin-bottom: 0.5rem; }
-  h1 span { background: linear-gradient(135deg, #34d399, #3b82f6); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-  p.subtitle { color: var(--text-muted); font-size: 1rem; max-width: 650px; margin: 0 auto; }
   
-  .privacy-banner {
-    margin: 1.5rem auto 0; max-width: 780px;
-    background: rgba(59, 130, 246, 0.08); border: 1px solid rgba(59, 130, 246, 0.25);
-    border-radius: 12px; padding: 0.85rem 1.25rem; font-size: 0.82rem;
-    color: #93c5fd; text-align: left; display: flex; align-items: center; gap: 0.75rem;
+  header { text-align: center; margin-bottom: 2.25rem; }
+  .brand-pill {
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    padding: 0.38rem 0.95rem; border-radius: 999px;
+    background: rgba(15, 191, 241, 0.08); border: 1px solid var(--card-border);
+    color: var(--futux-cyan); font-size: 0.72rem; font-weight: 700;
+    text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 1rem;
   }
-  .privacy-banner strong { color: #bfdbfe; }
+  .brand-dot { width: 6px; height: 6px; border-radius: 999px; background: var(--futux-orange); box-shadow: 0 0 8px var(--futux-orange); }
+  h1 { font-size: 2.75rem; font-weight: 800; letter-spacing: -0.03em; margin-bottom: 0.5rem; }
+  h1 span.cyan { color: var(--futux-cyan); }
+  h1 span.orange { color: var(--futux-orange); }
+  p.subtitle { color: var(--text-secondary); font-size: 1rem; max-width: 680px; margin: 0 auto; }
+  
+  .privacy-strip {
+    margin: 1.5rem auto 0; max-width: 780px;
+    background: rgba(11, 53, 65, 0.4); border: 1px solid var(--card-border);
+    border-radius: var(--radius-md); padding: 0.85rem 1.25rem;
+    display: flex; align-items: center; gap: 0.75rem; text-align: left;
+    font-size: 0.8rem; color: #BAE6FD;
+  }
+  .privacy-strip strong { color: #F8FAFC; }
 
   .glass-card {
     background: var(--card-bg);
     border: 1px solid var(--card-border);
-    backdrop-filter: blur(12px);
-    border-radius: 16px;
-    padding: 1.5rem;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-    margin-bottom: 1.5rem;
+    backdrop-filter: blur(20px);
+    border-radius: var(--radius-lg);
+    padding: 1.75rem;
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.45);
+    margin-bottom: 1.75rem;
+    transition: border-color 0.2s ease;
+  }
+  .glass-card:hover { border-color: var(--card-border-glow); }
+
+  /* Dropzone & Controls */
+  .dropzone {
+    border: 2px dashed rgba(15, 191, 241, 0.32); border-radius: var(--radius-md);
+    padding: 2.25rem 1.5rem; text-align: center; cursor: pointer;
+    background: rgba(11, 53, 65, 0.18); transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    margin-bottom: 1.25rem;
+  }
+  .dropzone:hover, .dropzone.dragover {
+    border-color: var(--futux-cyan); background: rgba(15, 191, 241, 0.09);
+    transform: translateY(-1px);
+  }
+  .upload-icon {
+    width: 44px; height: 44px; margin: 0 auto 0.75rem;
+    border-radius: 50%; background: rgba(15, 191, 241, 0.12);
+    display: flex; align-items: center; justify-content: center; color: var(--futux-cyan);
   }
 
   .controls-bar {
     display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 1rem;
+    margin-top: 1rem; padding-top: 1rem; border-top: 1px solid rgba(255, 255, 255, 0.06);
   }
-  .dataset-btn-group { display: flex; flex-wrap: wrap; gap: 0.5rem; }
-  .btn {
-    background: #1e293b; border: 1px solid rgba(255,255,255,0.1);
-    color: var(--text); padding: 0.55rem 1.1rem; border-radius: 10px;
-    font-size: 0.82rem; font-weight: 600; cursor: pointer; transition: all 0.2s;
+  .dataset-btn-group { display: flex; flex-wrap: wrap; gap: 0.5rem; align-items: center; }
+  .btn-sample {
+    background: rgba(15, 23, 42, 0.65); border: 1px solid rgba(255, 255, 255, 0.08);
+    color: var(--text-secondary); padding: 0.5rem 1rem; border-radius: 999px;
+    font-size: 0.78rem; font-weight: 600; cursor: pointer; transition: all 0.2s;
   }
-  .btn:hover { background: #334155; border-color: rgba(255,255,255,0.2); }
-  .btn.active {
-    background: var(--accent); color: #042f2e; border-color: var(--accent);
-    box-shadow: 0 0 15px var(--accent-glow);
+  .btn-sample:hover { background: rgba(15, 191, 241, 0.12); color: var(--text-primary); border-color: var(--card-border); }
+  .btn-sample.active {
+    background: linear-gradient(135deg, rgba(15, 191, 241, 0.25), rgba(11, 53, 65, 0.8));
+    color: var(--futux-cyan); border-color: var(--futux-cyan);
+    box-shadow: 0 0 15px rgba(15, 191, 241, 0.25);
   }
-  .btn-upload { background: linear-gradient(135deg, #2563eb, #1d4ed8); border: none; }
-  .btn-upload:hover { background: linear-gradient(135deg, #1d4ed8, #1e40af); }
 
+  .btn-action {
+    background: linear-gradient(135deg, var(--futux-cyan), #0284C7);
+    color: #042F2E; border: none; padding: 0.55rem 1.15rem; border-radius: var(--radius-sm);
+    font-weight: 700; font-size: 0.78rem; cursor: pointer; transition: opacity 0.2s;
+    display: inline-flex; align-items: center; gap: 0.4rem;
+  }
+  .btn-action:hover { opacity: 0.9; }
+  .btn-action.secondary {
+    background: rgba(11, 53, 65, 0.7); color: var(--futux-cyan);
+    border: 1px solid var(--card-border);
+  }
+  .btn-action.secondary:hover { background: rgba(11, 53, 65, 0.95); }
+
+  /* Metric Cards */
   .grid-stats {
-    display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem;
-    margin-bottom: 1.5rem;
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 1rem;
+    margin-bottom: 1.75rem;
   }
   .stat-card {
-    background: rgba(15, 23, 42, 0.6); border: 1px solid var(--card-border);
-    border-radius: 14px; padding: 1.25rem; text-align: center;
+    background: var(--card-surface); border: 1px solid var(--card-border);
+    border-radius: var(--radius-md); padding: 1.35rem 1.1rem; text-align: center;
+    position: relative; overflow: hidden;
   }
-  .stat-title { font-size: 0.75rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.05em; }
-  .stat-val { font-size: 2.8rem; font-weight: 800; line-height: 1.1; margin: 0.4rem 0; font-family: 'JetBrains Mono', monospace; }
-  .stat-val.main { color: var(--accent); text-shadow: 0 0 20px var(--accent-glow); }
-  .progress-wrap { width: 100%; height: 6px; background: #1e293b; border-radius: 999px; overflow: hidden; margin-top: 0.5rem; }
-  .progress-bar { height: 100%; border-radius: 999px; transition: width 0.5s ease-out; }
+  .stat-card::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+    background: linear-gradient(90deg, transparent, var(--futux-cyan), transparent);
+    opacity: 0.4;
+  }
+  .stat-title { font-size: 0.72rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.06em; }
+  .stat-val { font-size: 2.6rem; font-weight: 800; font-family: 'JetBrains Mono', monospace; line-height: 1.1; margin: 0.4rem 0; }
+  .stat-val.main { color: var(--futux-cyan); text-shadow: 0 0 20px rgba(15, 191, 241, 0.35); }
+  .stat-sub { font-size: 0.72rem; color: var(--text-muted); }
   
+  .progress-wrap { width: 100%; height: 5px; background: rgba(255, 255, 255, 0.08); border-radius: 999px; overflow: hidden; margin-top: 0.6rem; }
+  .progress-bar { height: 100%; border-radius: 999px; transition: width 0.6s cubic-bezier(0.16, 1, 0.3, 1); }
+
   .grade-badge {
-    display: inline-block; padding: 0.2rem 0.65rem; border-radius: 999px;
-    font-size: 0.75rem; font-weight: 800; font-family: 'JetBrains Mono', monospace;
+    display: inline-block; padding: 0.22rem 0.75rem; border-radius: 999px;
+    font-size: 0.72rem; font-weight: 800; font-family: 'JetBrains Mono', monospace;
+    letter-spacing: 0.05em;
   }
-  .grade-A { background: rgba(16, 185, 129, 0.15); color: #34d399; border: 1px solid #10b981; }
-  .grade-B { background: rgba(59, 130, 246, 0.15); color: #60a5fa; border: 1px solid #3b82f6; }
-  .grade-C { background: rgba(245, 158, 11, 0.15); color: #fbbf24; border: 1px solid #f59e0b; }
+  .grade-A { background: rgba(16, 185, 129, 0.15); color: #34D399; border: 1px solid var(--emerald); }
+  .grade-B { background: rgba(15, 191, 241, 0.15); color: var(--futux-cyan); border: 1px solid var(--futux-cyan); }
+  .grade-C { background: rgba(255, 145, 77, 0.15); color: var(--futux-orange); border: 1px solid var(--futux-orange); }
+  .grade-D, .grade-F { background: rgba(244, 63, 94, 0.15); color: var(--rose); border: 1px solid var(--rose); }
 
-  table { width: 100%; border-collapse: collapse; font-size: 0.8rem; font-family: 'JetBrains Mono', monospace; }
-  th { background: rgba(30, 41, 59, 0.8); text-align: left; padding: 0.75rem 1rem; color: var(--text-muted); font-size: 0.72rem; text-transform: uppercase; }
-  td { padding: 0.65rem 1rem; border-bottom: 1px solid rgba(255,255,255,0.05); }
-  tr:hover td { background: rgba(255,255,255,0.02); }
-  .dim-tag { display: inline-block; padding: 0.15rem 0.45rem; border-radius: 4px; font-size: 0.68rem; font-weight: 600; }
-  .dim-completeness { background: rgba(59, 130, 246, 0.2); color: #93c5fd; }
-  .dim-validity { background: rgba(139, 92, 246, 0.2); color: #c4b5fd; }
-  .dim-uniqueness { background: rgba(244, 63, 94, 0.2); color: #fecdd3; }
-  .dim-outliers { background: rgba(245, 158, 11, 0.2); color: #fde68a; }
+  /* Filter Tabs & Table */
+  .filter-tabs { display: flex; gap: 0.5rem; margin-bottom: 1rem; }
+  .filter-btn {
+    background: transparent; border: 1px solid rgba(255, 255, 255, 0.08);
+    color: var(--text-muted); font-size: 0.72rem; font-weight: 600;
+    padding: 0.35rem 0.75rem; border-radius: 999px; cursor: pointer; transition: all 0.2s;
+  }
+  .filter-btn:hover { color: var(--text-primary); border-color: var(--card-border); }
+  .filter-btn.active { background: rgba(15, 191, 241, 0.15); color: var(--futux-cyan); border-color: var(--futux-cyan); }
 
-  footer { text-align: center; color: var(--text-muted); font-size: 0.8rem; margin-top: 3rem; }
-  footer a { color: var(--accent); text-decoration: none; }
+  table { width: 100%; border-collapse: collapse; font-size: 0.78rem; font-family: 'JetBrains Mono', monospace; }
+  th { background: rgba(11, 53, 65, 0.55); text-align: left; padding: 0.75rem 1rem; color: var(--text-secondary); font-size: 0.7rem; text-transform: uppercase; }
+  td { padding: 0.65rem 1rem; border-bottom: 1px solid rgba(255, 255, 255, 0.05); }
+  tr:hover td { background: rgba(15, 191, 241, 0.03); }
+
+  .dim-tag { display: inline-block; padding: 0.15rem 0.5rem; border-radius: 4px; font-size: 0.68rem; font-weight: 700; text-transform: uppercase; }
+  .dim-completeness { background: rgba(15, 191, 241, 0.18); color: var(--futux-cyan); }
+  .dim-validity { background: rgba(168, 85, 247, 0.2); color: #C084FC; }
+  .dim-uniqueness { background: rgba(255, 145, 77, 0.2); color: var(--futux-orange); }
+  .dim-outliers { background: rgba(244, 63, 94, 0.2); color: #FDA4AF; }
+
+  footer { text-align: center; color: var(--text-muted); font-size: 0.8rem; margin-top: 3.5rem; }
+  footer a { color: var(--futux-cyan); text-decoration: none; }
 </style>
 </head>
 <body>
 <div class="container">
   <header>
-    <div class="badge">Open-Source DPI Middleware</div>
-    <h1>Open-DQI <span>Playground</span></h1>
-    <p class="subtitle">Real-time Data Quality Index evaluation across Completeness, Validity, Uniqueness, and Outlier Detection in 100% client-side WebAssembly / JS.</p>
-    <div class="privacy-banner">
+    <div class="brand-pill">
+      <span class="brand-dot"></span>
+      FutuX Agri-consult &bull; Open-Source DPI Middleware
+    </div>
+    <h1>Open-DQI <span class="cyan">Audit</span> <span class="orange">Playground</span></h1>
+    <p class="subtitle">Deterministic Data Quality Index calculation across Completeness, Validity, Uniqueness, and Outlier IQR bounds with 100% in-browser evaluation.</p>
+    
+    <div class="privacy-strip">
       <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-      <div><strong>Zero Server Uploads:</strong> All parsing and statistical evaluation execute inside your browser. No data ever leaves your device.</div>
+      <div><strong>Complete Privacy Guarantee:</strong> Your dataset never touches a remote server. All CSV parsing, statistical hashing, and DQI weighted scoring execute locally on your client machine.</div>
     </div>
   </header>
 
-  <div class="glass-card controls-bar">
-    <div>
-      <div style="font-size: 0.75rem; font-weight: 700; color: var(--text-muted); margin-bottom: 0.4rem; text-transform: uppercase;">Sample Datasets</div>
-      <div class="dataset-btn-group">
-        <button class="btn active" id="btn-agri" onclick="loadSample('agriculture')">Agriculture Clean (200 rows)</button>
-        <button class="btn" id="btn-voter" onclick="loadSample('voter')">Civil Registry (200 rows)</button>
-        <button class="btn" id="btn-credit" onclick="loadSample('credit')">Credit Applicants (200 rows)</button>
+  <div class="glass-card">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.25rem;">
+      <div>
+        <h2 style="font-size: 1.15rem; font-weight: 700;">Upload Dataset or Audit Synthetic Fixtures</h2>
+        <p style="font-size: 0.8rem; color: var(--text-secondary);">Drop any CSV file to calculate real-time weighted DQI scores and inspect row-level defects.</p>
+      </div>
+      <div style="display: flex; gap: 0.5rem;">
+        <button class="btn-action secondary" onclick="exportReportJSON()">
+          <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M17 8l-5-5-5 5M12 3v12"/></svg>
+          Export JSON
+        </button>
+        <button class="btn-action" onclick="document.getElementById('csv-file-input').click()">
+          <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 4v16m8-8H4"/></svg>
+          Upload CSV
+        </button>
       </div>
     </div>
-    <div>
-      <label class="btn btn-upload" style="display: inline-flex; align-items: center; gap: 0.5rem; cursor: pointer;">
-        <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M17 8l-5-5-5 5M12 3v12"/></svg>
-        Upload CSV
-        <input type="file" id="csv-file-input" accept=".csv" style="display: none;" onchange="handleFileUpload(event)">
-      </label>
-      <button class="btn" onclick="exportReportJSON()" style="margin-left: 0.5rem;">Export JSON</button>
+
+    <div class="dropzone" id="dropzone" onclick="document.getElementById('csv-file-input').click()">
+      <div class="upload-icon">
+        <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M17 8l-5-5-5 5M12 3v12"/></svg>
+      </div>
+      <div style="font-weight: 700; font-size: 0.95rem; margin-bottom: 0.25rem;">Click to upload or drag &amp; drop any CSV dataset</div>
+      <div style="font-size: 0.78rem; color: var(--text-muted);">Parses columns, checks missing values, detects coordinate/phone anomalies, and calculates IQR outliers</div>
+      <input type="file" id="csv-file-input" accept=".csv" style="display: none;" onchange="handleFileUpload(event)">
+    </div>
+
+    <div class="controls-bar">
+      <div>
+        <span style="font-size: 0.72rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase; margin-right: 0.75rem;">Preset Fixtures:</span>
+        <div class="dataset-btn-group" style="display: inline-flex;">
+          <button class="btn-sample active" id="btn-agri" onclick="loadSample('agriculture')">Agriculture Clean (200 rows)</button>
+          <button class="btn-sample" id="btn-voter" onclick="loadSample('voter')">Civil Registry (200 rows)</button>
+          <button class="btn-sample" id="btn-credit" onclick="loadSample('credit')">Credit Applicants (200 rows)</button>
+        </div>
+      </div>
+      <div id="file-info" style="font-size: 0.75rem; color: var(--text-muted); font-family: 'JetBrains Mono', monospace;">
+        Source: synthetic_clean_agri.csv
+      </div>
     </div>
   </div>
 
@@ -154,32 +251,45 @@
     </div>
     <div class="stat-card">
       <div class="stat-title">Completeness (25%)</div>
-      <div class="stat-val" style="color: #60a5fa;" id="stat-c">100.0%</div>
-      <div class="progress-wrap"><div class="progress-bar" id="bar-c" style="width: 100%; background: #3b82f6;"></div></div>
+      <div class="stat-val" style="color: var(--futux-cyan);" id="stat-c">100.0%</div>
+      <div class="progress-wrap"><div class="progress-bar" id="bar-c" style="width: 100%; background: var(--futux-cyan);"></div></div>
+      <div class="stat-sub" id="sub-c" style="margin-top: 0.4rem;">0 missing cells</div>
     </div>
     <div class="stat-card">
       <div class="stat-title">Validity (35%)</div>
-      <div class="stat-val" style="color: #c084fc;" id="stat-v">100.0%</div>
-      <div class="progress-wrap"><div class="progress-bar" id="bar-v" style="width: 100%; background: #8b5cf6;"></div></div>
+      <div class="stat-val" style="color: #C084FC;" id="stat-v">100.0%</div>
+      <div class="progress-wrap"><div class="progress-bar" id="bar-v" style="width: 100%; background: #A855F7;"></div></div>
+      <div class="stat-sub" id="sub-v" style="margin-top: 0.4rem;">0 format anomalies</div>
     </div>
     <div class="stat-card">
       <div class="stat-title">Uniqueness (25%)</div>
-      <div class="stat-val" style="color: #f472b6;" id="stat-u">100.0%</div>
-      <div class="progress-wrap"><div class="progress-bar" id="bar-u" style="width: 100%; background: #ec4899;"></div></div>
+      <div class="stat-val" style="color: var(--futux-orange);" id="stat-u">100.0%</div>
+      <div class="progress-wrap"><div class="progress-bar" id="bar-u" style="width: 100%; background: var(--futux-orange);"></div></div>
+      <div class="stat-sub" id="sub-u" style="margin-top: 0.4rem;">0 duplicate keys</div>
     </div>
     <div class="stat-card">
       <div class="stat-title">Outliers (15%)</div>
-      <div class="stat-val" style="color: #fbbf24;" id="stat-o">100.0%</div>
-      <div class="progress-wrap"><div class="progress-bar" id="bar-o" style="width: 100%; background: #f59e0b;"></div></div>
+      <div class="stat-val" style="color: #FDA4AF;" id="stat-o">100.0%</div>
+      <div class="progress-wrap"><div class="progress-bar" id="bar-o" style="width: 100%; background: var(--rose);"></div></div>
+      <div class="stat-sub" id="sub-o" style="margin-top: 0.4rem;">0 IQR violations</div>
     </div>
   </div>
 
   <div class="glass-card">
-    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
-      <h3 style="font-size: 1.1rem; font-weight: 700;">Audit Issue Inspector (<span id="issues-count">0</span> issues)</h3>
-      <div style="font-size: 0.75rem; color: var(--text-muted);" id="meta-records">200 evaluated records</div>
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; flex-wrap: wrap; gap: 0.5rem;">
+      <div>
+        <h3 style="font-size: 1.1rem; font-weight: 700;">Audit Issue Inspector (<span id="issues-count">0</span> defects flagged)</h3>
+        <p style="font-size: 0.75rem; color: var(--text-secondary);" id="meta-records">200 evaluated records</p>
+      </div>
+      <div class="filter-tabs">
+        <button class="filter-btn active" onclick="filterIssues('all', this)">All Issues</button>
+        <button class="filter-btn" onclick="filterIssues('completeness', this)">Completeness</button>
+        <button class="filter-btn" onclick="filterIssues('validity', this)">Validity</button>
+        <button class="filter-btn" onclick="filterIssues('uniqueness', this)">Uniqueness</button>
+        <button class="filter-btn" onclick="filterIssues('outliers', this)">Outliers</button>
+      </div>
     </div>
-    <div style="max-height: 400px; overflow-y: auto;">
+    <div style="max-height: 420px; overflow-y: auto;">
       <table id="issues-table">
         <thead>
           <tr>
@@ -187,11 +297,11 @@
             <th>Row</th>
             <th>Field</th>
             <th>Dimension</th>
-            <th>Audit Rule Violation</th>
+            <th>Violation Details</th>
           </tr>
         </thead>
         <tbody id="issues-body">
-          <tr><td colspan="5" style="text-align: center; color: var(--accent); padding: 2rem;">No defects found. High quality baseline!</td></tr>
+          <tr><td colspan="5" style="text-align: center; color: var(--emerald); padding: 2rem;">No defects found. High quality baseline!</td></tr>
         </tbody>
       </table>
     </div>
@@ -199,15 +309,20 @@
 
   <footer>
     <p>Maintained by <strong>Daniel Olagunju</strong> (<a href="mailto:d.olagunju@futuxconsult.com">d.olagunju@futuxconsult.com</a>) &amp; <strong>Temitope Olarewaju</strong> (<a href="mailto:t.olarewaju@futuxconsult.com">t.olarewaju@futuxconsult.com</a>)</p>
-    <p style="margin-top: 0.3rem;">FutuX Agri-consult Limited &bull; Released under Apache-2.0 License &bull; <a href="https://github.com/todak2000/open-dqi-core" target="_blank">GitHub Repository</a></p>
+    <p style="margin-top: 0.35rem;">FutuX Agri-consult Limited &bull; Released under Apache-2.0 License &bull; <a href="https://github.com/todak2000/open-dqi-core" target="_blank">GitHub Repository</a></p>
   </footer>
 </div>
 
 <script>
 let currentAuditResult = { dqi: 100, grade: "A", c: 100, v: 100, u: 100, o: 100, records: 200, issues: [] };
+let activeFilter = 'all';
 
+// Preset samples
 const SAMPLES = {
-  agriculture: { dqi: 100.00, grade: "A", c: 100.0, v: 100.0, u: 100.0, o: 100.0, records: 200, issues: [] },
+  agriculture: {
+    dqi: 100.00, grade: "A", c: 100.0, v: 100.0, u: 100.0, o: 100.0, records: 200,
+    issues: [], source: "synthetic_clean_agri.csv"
+  },
   voter: {
     dqi: 86.40, grade: "B", c: 92.5, v: 88.0, u: 91.2, o: 84.0, records: 200,
     issues: [
@@ -216,7 +331,8 @@ const SAMPLES = {
       { row: 45, field: "latitude", dim: "validity", reason: "latitude_out_of_bounds_[-15.2]" },
       { row: 78, field: "voter_id", dim: "uniqueness", reason: "exact_duplicate_key_VTR-000001" },
       { row: 92, field: "age", dim: "outliers", reason: "iqr_outlier_value_[114]" }
-    ]
+    ],
+    source: "synthetic_voter_rolls.csv"
   },
   credit: {
     dqi: 73.80, grade: "C", c: 84.0, v: 71.5, u: 79.0, o: 68.0, records: 200,
@@ -225,7 +341,8 @@ const SAMPLES = {
       { row: 14, field: "phone", dim: "validity", reason: "invalid_phone_format" },
       { row: 23, field: "monthly_income", dim: "outliers", reason: "iqr_outlier_value_[9500000]" },
       { row: 55, field: "applicant_id", dim: "uniqueness", reason: "exact_duplicate_key" }
-    ]
+    ],
+    source: "synthetic_credit_scoring.csv"
   }
 };
 
@@ -250,12 +367,23 @@ function renderUI(res) {
 
   document.getElementById("issues-count").innerText = res.issues.length;
   document.getElementById("meta-records").innerText = res.records + " evaluated records";
+  if (res.source) {
+    document.getElementById("file-info").innerText = "Source: " + res.source;
+  }
 
+  renderIssuesTable();
+}
+
+function renderIssuesTable() {
   const tbody = document.getElementById("issues-body");
-  if (res.issues.length === 0) {
-    tbody.innerHTML = '<tr><td colspan="5" style="text-align: center; color: var(--accent); padding: 2rem;">No defects found across any dimensions. Baseline passes high quality threshold!</td></tr>';
+  const filtered = activeFilter === 'all' 
+    ? currentAuditResult.issues 
+    : currentAuditResult.issues.filter(it => it.dim === activeFilter);
+
+  if (filtered.length === 0) {
+    tbody.innerHTML = '<tr><td colspan="5" style="text-align: center; color: var(--emerald); padding: 2.5rem;">No defects found for the current selection. Pass!</td></tr>';
   } else {
-    tbody.innerHTML = res.issues.map((it, idx) => `
+    tbody.innerHTML = filtered.map((it, idx) => `
       <tr>
         <td>${idx + 1}</td>
         <td>Row #${it.row}</td>
@@ -267,36 +395,183 @@ function renderUI(res) {
   }
 }
 
+function filterIssues(dim, btn) {
+  activeFilter = dim;
+  document.querySelectorAll(".filter-btn").forEach(b => b.classList.remove("active"));
+  btn.classList.add("active");
+  renderIssuesTable();
+}
+
 function loadSample(key) {
-  document.querySelectorAll(".dataset-btn-group .btn").forEach(b => b.classList.remove("active"));
+  document.querySelectorAll(".dataset-btn-group .btn-sample").forEach(b => b.classList.remove("active"));
   const btn = document.getElementById("btn-" + key);
   if (btn) btn.classList.add("active");
   renderUI(SAMPLES[key]);
 }
 
+// Drag & drop support
+const dropzone = document.getElementById("dropzone");
+['dragenter', 'dragover'].forEach(eventName => {
+  dropzone.addEventListener(eventName, (e) => { e.preventDefault(); dropzone.classList.add('dragover'); }, false);
+});
+['dragleave', 'drop'].forEach(eventName => {
+  dropzone.addEventListener(eventName, (e) => { e.preventDefault(); dropzone.classList.remove('dragover'); }, false);
+});
+dropzone.addEventListener('drop', (e) => {
+  const dt = e.dataTransfer;
+  const files = dt.files;
+  if (files.length) parseClientCSV(files[0]);
+});
+
 function handleFileUpload(e) {
   const file = e.target.files[0];
   if (!file) return;
-  const reader = new FileReader();
-  reader.onload = function(evt) {
-    const text = evt.target.result;
-    const lines = text.split("\n").filter(l => l.trim() !== "");
-    const rowCount = Math.max(1, lines.length - 1);
-    // Dynamic audit simulation on uploaded CSV
-    renderUI({
-      dqi: 91.25,
-      grade: "A",
-      c: 96.0,
-      v: 94.5,
-      u: 95.0,
-      o: 90.0,
-      records: rowCount,
-      issues: [
-        { row: 1, field: lines[0].split(",")[0] || "id", dim: "completeness", reason: "custom_file_validated" }
-      ]
+  parseClientCSV(file);
+}
+
+// Comprehensive In-Browser DQI Engine
+function parseClientCSV(file) {
+  Papa.parse(file, {
+    header: true,
+    skipEmptyLines: true,
+    complete: function(results) {
+      if (!results.data || results.data.length === 0) {
+        alert("The uploaded CSV file is empty.");
+        return;
+      }
+      auditCSVData(results.data, file.name);
+    }
+  });
+}
+
+function auditCSVData(rows, filename) {
+  const totalRows = rows.length;
+  const cols = Object.keys(rows[0] || {});
+  const totalCells = totalRows * cols.length;
+  
+  let emptyCells = 0;
+  const issues = [];
+  
+  // 1. COMPLETENESS CHECK
+  cols.forEach(col => {
+    rows.forEach((r, idx) => {
+      const val = r[col];
+      if (val === undefined || val === null || String(val).trim() === "") {
+        emptyCells++;
+        if (issues.length < 50) {
+          issues.push({ row: idx + 1, field: col, dim: "completeness", reason: "missing_or_empty_value" });
+        }
+      }
     });
-  };
-  reader.readAsText(file);
+  });
+  const completenessScore = Math.max(0, 100 - (emptyCells / totalCells) * 100);
+
+  // 2. VALIDITY CHECK
+  let invalidCount = 0;
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  const phoneCols = cols.filter(c => /phone|tel|mobile/i.test(c));
+  const emailCols = cols.filter(c => /email/i.test(c));
+  const latCols = cols.filter(c => /lat|latitude/i.test(c));
+  const lonCols = cols.filter(c => /lon|longitude|lng/i.test(c));
+
+  rows.forEach((r, idx) => {
+    phoneCols.forEach(col => {
+      const v = String(r[col] || "").trim();
+      if (v && !/^\+?[0-9]{7,15}$/.test(v.replace(/[\s-]/g, ''))) {
+        invalidCount++;
+        if (issues.length < 80) issues.push({ row: idx + 1, field: col, dim: "validity", reason: `invalid_phone_format_${v}` });
+      }
+    });
+    emailCols.forEach(col => {
+      const v = String(r[col] || "").trim();
+      if (v && !emailRegex.test(v)) {
+        invalidCount++;
+        if (issues.length < 80) issues.push({ row: idx + 1, field: col, dim: "validity", reason: `invalid_email_syntax_${v}` });
+      }
+    });
+    latCols.forEach(col => {
+      const v = parseFloat(r[col]);
+      if (!isNaN(v) && (v < -90 || v > 90)) {
+        invalidCount++;
+        if (issues.length < 80) issues.push({ row: idx + 1, field: col, dim: "validity", reason: `latitude_out_of_range_[${v}]` });
+      }
+    });
+    lonCols.forEach(col => {
+      const v = parseFloat(r[col]);
+      if (!isNaN(v) && (v < -180 || v > 180)) {
+        invalidCount++;
+        if (issues.length < 80) issues.push({ row: idx + 1, field: col, dim: "validity", reason: `longitude_out_of_range_[${v}]` });
+      }
+    });
+  });
+  const validityScore = Math.max(0, 100 - (invalidCount / Math.max(1, totalRows)) * 100);
+
+  // 3. UNIQUENESS CHECK
+  const idCol = cols.find(c => /id|nin|code|bvn|uuid/i.test(c)) || cols[0];
+  const seenIds = new Set();
+  let duplicateCount = 0;
+  rows.forEach((r, idx) => {
+    const key = String(r[idCol] || "").trim();
+    if (key) {
+      if (seenIds.has(key)) {
+        duplicateCount++;
+        if (issues.length < 100) issues.push({ row: idx + 1, field: idCol, dim: "uniqueness", reason: `exact_duplicate_key_${key}` });
+      } else {
+        seenIds.add(key);
+      }
+    }
+  });
+  const uniquenessScore = Math.max(0, 100 - (duplicateCount / Math.max(1, totalRows)) * 100);
+
+  // 4. OUTLIER DETECTION (IQR Tukey fences on numeric columns)
+  let outlierCount = 0;
+  cols.forEach(col => {
+    const numericVals = rows
+      .map((r, idx) => ({ val: parseFloat(r[col]), row: idx + 1 }))
+      .filter(item => !isNaN(item.val))
+      .sort((a, b) => a.val - b.val);
+
+    if (numericVals.length >= 8 && !/id|phone|year|zip|code/i.test(col)) {
+      const q1 = numericVals[Math.floor(numericVals.length * 0.25)].val;
+      const q3 = numericVals[Math.floor(numericVals.length * 0.75)].val;
+      const iqr = q3 - q1;
+      const lower = q1 - 1.5 * iqr;
+      const upper = q3 + 1.5 * iqr;
+
+      numericVals.forEach(item => {
+        if (item.val < lower || item.val > upper) {
+          outlierCount++;
+          if (issues.length < 120) {
+            issues.push({ row: item.row, field: col, dim: "outliers", reason: `iqr_outlier_value_[${item.val}]` });
+          }
+        }
+      });
+    }
+  });
+  const outlierScore = Math.max(0, 100 - (outlierCount / Math.max(1, totalRows)) * 100);
+
+  // Weighted DQI Formula: 0.25*C + 0.35*V + 0.25*U + 0.15*O
+  const finalDQI = (0.25 * completenessScore) + (0.35 * validityScore) + (0.25 * uniquenessScore) + (0.15 * outlierScore);
+  
+  let grade = "A";
+  if (finalDQI < 60) grade = "F";
+  else if (finalDQI < 70) grade = "D";
+  else if (finalDQI < 80) grade = "C";
+  else if (finalDQI < 90) grade = "B";
+
+  document.querySelectorAll(".dataset-btn-group .btn-sample").forEach(b => b.classList.remove("active"));
+
+  renderUI({
+    dqi: finalDQI,
+    grade: grade,
+    c: completenessScore,
+    v: validityScore,
+    u: uniquenessScore,
+    o: outlierScore,
+    records: totalRows,
+    issues: issues,
+    source: filename
+  });
 }
 
 function exportReportJSON() {
@@ -304,7 +579,7 @@ function exportReportJSON() {
   const url = URL.createObjectURL(blob);
   const a = document.createElement("a");
   a.href = url;
-  a.download = "dqi_audit_report.json";
+  a.download = `open_dqi_audit_${Date.now()}.json`;
   a.click();
 }
 </script>
