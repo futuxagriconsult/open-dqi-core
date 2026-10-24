@@ -16,7 +16,7 @@
     "dpi",
     "audit"
   ],
-  "author": "Daniel Olagunju <todak2000@gmail.com>, Temitope Olarewaju <temitope@futuxconsult.com>",
+  "author": "Daniel Olagunju <d.olagunju@futuxconsult.com>, Temitope Olarewaju <t.olarewaju@futuxconsult.com>",
   "license": "Apache-2.0",
   "dependencies": {
     "js-yaml": "^4.1.0",

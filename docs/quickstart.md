@@ -3,8 +3,8 @@
 `open-dqi` is a schema-agnostic Data Quality Index library that computes weighted quality scores (0-100) across Completeness, Validity, Uniqueness, and Outlier Detection for any tabular CSV or pandas DataFrame.
 
 ## Authors
-- **Daniel Olagunju** (`todak2000@gmail.com`)
-- **Temitope Olarewaju** (`temitope@futuxconsult.com`)
+- **Daniel Olagunju** (`d.olagunju@futuxconsult.com`)
+- **Temitope Olarewaju** (`t.olarewaju@futuxconsult.com`)
 - **Affiliation:** FutuX Agri-consult Limited
 
 ---

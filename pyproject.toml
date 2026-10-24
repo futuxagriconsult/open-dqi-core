@@ -10,8 +10,8 @@ readme = "README.md"
 license = { text = "Apache-2.0" }
 requires-python = ">=3.10"
 authors = [
-  { name = "Daniel Olagunju", email = "todak2000@gmail.com" },
-  { name = "Temitope Olarewaju", email = "temitope@futuxconsult.com" },
+  { name = "Daniel Olagunju", email = "d.olagunju@futuxconsult.com" },
+  { name = "Temitope Olarewaju", email = "t.olarewaju@futuxconsult.com" },
 ]
 keywords = ["data quality", "DQI", "data governance", "DPI", "Africa"]
 classifiers = [
